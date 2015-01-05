@@ -10,6 +10,7 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="flixel" />
+	<haxelib name="FlxMintInput" />
 	
 	<assets path="Assets" rename="assets" exclude="openfl.svg" />
 	<icon path="Assets/openfl.svg" />
