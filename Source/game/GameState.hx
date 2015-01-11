@@ -1,8 +1,10 @@
 package game;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
 {
@@ -16,6 +18,7 @@ class GameState extends FlxState
 	override public function create():Void
 	{
 		addPlayer();
+		addBinds();
 	}
 	
 	private function addPlayer():Void
@@ -28,5 +31,13 @@ class GameState extends FlxState
 		add(p);
 		
 		_players.add(p);
+	}
+	
+	private function addBinds():Void
+	{
+		FlxMintInput.bindToFunction("w", _players.members[0], "move", [FlxObject.UP], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("s", _players.members[0], "move", [FlxObject.DOWN], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("a", _players.members[0], "move", [FlxObject.LEFT], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("d", _players.members[0], "move", [FlxObject.RIGHT], FlxMintInput.DOWN);
 	}
 }
