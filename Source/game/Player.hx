@@ -13,17 +13,17 @@ class Player extends FlxSprite
 	{
 		super();
 		
-		maxVelocity.set(200, 200);
-		drag.set(800, 800);
+		maxVelocity.set(400, 400);
+		drag.set(4000, 4000);
 		makeGraphic(20, 20, 0xFF0000FF);
 	}
 	
 	public function move(dir:Int):Void
 	{
-		if (dir == FlxObject.LEFT)  acceleration.x = -maxVelocity.x * 4;
-		if (dir == FlxObject.RIGHT)  acceleration.x = maxVelocity.x * 4;
-		if (dir == FlxObject.UP)  acceleration.y = -maxVelocity.y * 4;
-		if (dir == FlxObject.DOWN)  acceleration.y = maxVelocity.y * 4;
+		if (dir == FlxObject.LEFT)  acceleration.x = -maxVelocity.x * 10;
+		if (dir == FlxObject.RIGHT)  acceleration.x = maxVelocity.x * 10;
+		if (dir == FlxObject.UP)  acceleration.y = -maxVelocity.y * 10;
+		if (dir == FlxObject.DOWN)  acceleration.y = maxVelocity.y * 10;
 	}
 	
 	override public function update(elapsed:Float):Void 
