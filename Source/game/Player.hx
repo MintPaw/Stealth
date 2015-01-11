@@ -26,4 +26,11 @@ class Player extends FlxSprite
 		if (dir == FlxObject.DOWN)  acceleration.y = maxVelocity.y * 4;
 	}
 	
+	override public function update(elapsed:Float):Void 
+	{
+		super.update(elapsed);
+		
+		acceleration.set();
+	}
+	
 }
