@@ -11,6 +11,7 @@ class GameState extends FlxState
 	private var _level:Level;
 	
 	private var _players:FlxTypedGroup<Player>;
+	private var _enemies:FlxTypedGroup<Enemy>;
 	
 	public function new()
 	{
@@ -30,6 +31,14 @@ class GameState extends FlxState
 		
 		add(_level.collisionLayer);
 		add(_level.visualLayer);
+		
+		for (i in _level.enemies)
+		{
+			var e:Enemy = new Enemy();
+			e.x = i.x + e.width / 2;
+			e.y = i.y + e.height / 2;
+			add(e);
+		}
 	}
 	
 	private function setupPlayer():Void
