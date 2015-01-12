@@ -37,11 +37,12 @@ class Level
 		for (i in 0...metaLayer.tileArray.length) 
 		{
 			if (metaLayer.tileArray[i] == META_SPAWN)
-				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, i / metaLayer.width * _tiledMap.tileWidth);
-				
+				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
+			
 			if (metaLayer.tileArray[i] == META_ENEMY)
-				enemies.push(new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, i / metaLayer.width * _tiledMap.tileWidth));
+				enemies.push(new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth));
 		}
+		
 	}
 	
 	private function setupCollision():Void
