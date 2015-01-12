@@ -13,6 +13,7 @@ class Main extends Sprite
 	public function new()
 	{
 		addEventListener(Event.ADDED_TO_STAGE, init);
+		
 		super();
 	}
 	

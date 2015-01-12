@@ -19,11 +19,17 @@ class GameState extends FlxState
 
 	override public function create():Void
 	{
-		addPlayer();
-		addBinds();
+		setupMap();
+		setupPlayer();
+		setupBinds();
 	}
 	
-	private function addPlayer():Void
+	private function setupMap():Void
+	{
+		_level = new Level("Assets/map/level0.tmx");
+	}
+	
+	private function setupPlayer():Void
 	{
 		_players = new FlxTypedGroup<Player>();
 		
@@ -35,7 +41,7 @@ class GameState extends FlxState
 		_players.add(p);
 	}
 	
-	private function addBinds():Void
+	private function setupBinds():Void
 	{
 		FlxMintInput.bindToFunction("w", _players.members[0], "move", [FlxObject.UP], FlxMintInput.DOWN);
 		FlxMintInput.bindToFunction("s", _players.members[0], "move", [FlxObject.DOWN], FlxMintInput.DOWN);
