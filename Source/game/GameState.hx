@@ -37,8 +37,8 @@ class GameState extends FlxState
 		_players = new FlxTypedGroup<Player>();
 		
 		var p:Player = new Player();
-		p.x = _level.spawnPoint.x - p.width / 2;
-		p.y = _level.spawnPoint.y - p.height / 2;
+		p.x = _level.spawnPoint.x + p.width / 2;
+		p.y = _level.spawnPoint.y + p.height / 2;
 		add(p);
 		
 		_players.add(p);
