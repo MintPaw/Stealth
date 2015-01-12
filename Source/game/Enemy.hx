@@ -18,13 +18,15 @@ class Enemy extends FlxSprite
 		makeGraphic(20, 20, 0xFFFF00FF);
 		
 		gun = new FlxSprite();
-		gun.makeGraphic(20, 5, 0xFF000000);
+		gun.makeGraphic(5, 20, 0xFF000000);
+		gun.origin.y -= gun.height / 2 - gun.width / 2;
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
-		gun.x = x;
-		gun.y = y;
+		gun.x = x + width / 2 - gun.width / 2;
+		gun.y = y + height / 2 - gun.width / 2;
+		gun.angle = angleFacing + 180;
 		
 		super.update(elapsed);
 	}
