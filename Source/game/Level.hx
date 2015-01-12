@@ -25,6 +25,7 @@ class Level
 		
 		setupMeta();
 		setupCollision();
+		setupVisual();
 	}
 	
 	private function setupMeta():Void
@@ -42,6 +43,14 @@ class Level
 		
 		collisionLayer = new FlxTilemap();
 		collisionLayer.loadMapFromArray(tiledCollisionLayer.tileArray, tiledCollisionLayer.width, tiledCollisionLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
+	}
+	
+	private function setupVisual():Void
+	{
+		var tiledVisualLayer:TiledLayer = _tiledMap.getLayer("Visual");
+		
+		visualLayer = new FlxTilemap();
+		visualLayer.loadMapFromArray(tiledVisualLayer.tileArray, tiledVisualLayer.width, tiledVisualLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
 	}
 	
 }

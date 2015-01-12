@@ -29,6 +29,7 @@ class GameState extends FlxState
 		_level = new Level("Assets/map/level0.tmx");
 		
 		add(_level.collisionLayer);
+		add(_level.visualLayer);
 	}
 	
 	private function setupPlayer():Void
