@@ -8,7 +8,6 @@ import flixel.FlxSprite;
  */
 class Enemy extends FlxSprite
 {	
-	public var playerList:Array<Player>;
 	public var gun:FlxSprite;
 	
 	public var angleFacing:Int = 0;

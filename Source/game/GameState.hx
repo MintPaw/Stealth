@@ -35,7 +35,6 @@ class GameState extends FlxState
 		_enemies = new FlxTypedGroup<Enemy>();
 		for (i in _level.enemies)
 		{
-			i.playerList = _players;
 			add(i);
 			add(i.gun);
 			
@@ -66,6 +65,7 @@ class GameState extends FlxState
 	override public function update(elapsed:Float):Void 
 	{
 		updateCollisions();
+		updateEnemies();
 		
 		super.update(elapsed);
 	}
@@ -73,5 +73,13 @@ class GameState extends FlxState
 	private function updateCollisions():Void
 	{
 		FlxG.collide(_players, _level.collisionLayer);
+	}
+	
+	private function updateEnemies():Void
+	{
+		for (i in _enemies)
+		{
+			
+		}
 	}
 }
