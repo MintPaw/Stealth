@@ -86,7 +86,7 @@ class GameState extends FlxState
 				
 				if (ang > i.angleFacing - i.angleVision && ang < i.angleFacing + i.angleVision && _level.collisionLayer.ray(i.getMidpoint(), j.getMidpoint()))
 				{
-					trace("Seen");
+					i.seePlayer(j);
 				}
 			}
 		}
