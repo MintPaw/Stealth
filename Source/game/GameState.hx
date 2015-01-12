@@ -35,6 +35,7 @@ class GameState extends FlxState
 		_enemies = new FlxTypedGroup<Enemy>();
 		for (i in _level.enemies)
 		{
+			i.playerList = _players;
 			add(i);
 			add(i.gun);
 			
