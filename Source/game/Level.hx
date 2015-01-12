@@ -17,7 +17,7 @@ class Level
 	public var visualLayer:FlxTilemap;
 	
 	public var spawnPoint:FlxPoint;
-	public var enemies:Array<FlxPoint> = [];
+	public var enemies:Array<Enemy> = [];
 	
 	private var _tiledMap:TiledMap;
 	
@@ -40,7 +40,12 @@ class Level
 				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
 			
 			if (metaLayer.tileArray[i] == META_ENEMY)
-				enemies.push(new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth));
+			{
+				var e:Enemy = new Enemy();
+				e.x = i % metaLayer.width * _tiledMap.tileHeight + e.width / 2;
+				e.y = Std.int(i / metaLayer.width) * _tiledMap.tileWidth + e.height / 2;
+				enemies.push(e);
+			}
 		}
 		
 	}

@@ -34,10 +34,7 @@ class GameState extends FlxState
 		
 		for (i in _level.enemies)
 		{
-			var e:Enemy = new Enemy();
-			e.x = i.x + e.width / 2;
-			e.y = i.y + e.height / 2;
-			add(e);
+			add(i);
 		}
 	}
 	
