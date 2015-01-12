@@ -42,8 +42,6 @@ class Level
 		
 		collisionLayer = new FlxTilemap();
 		collisionLayer.loadMapFromArray(tiledCollisionLayer.tileArray, tiledCollisionLayer.width, tiledCollisionLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
-		
-		trace(tiledCollisionLayer.tileArray);
 	}
 	
 }
