@@ -20,10 +20,10 @@ class Player extends FlxSprite
 	
 	public function move(dir:Int):Void
 	{
-		if (dir == FlxObject.LEFT)  acceleration.x = -maxVelocity.x * 10;
-		if (dir == FlxObject.RIGHT)  acceleration.x = maxVelocity.x * 10;
-		if (dir == FlxObject.UP)  acceleration.y = -maxVelocity.y * 10;
-		if (dir == FlxObject.DOWN)  acceleration.y = maxVelocity.y * 10;
+		if (dir == FlxObject.LEFT) acceleration.x = -maxVelocity.x * 10;
+		if (dir == FlxObject.RIGHT) acceleration.x = maxVelocity.x * 10;
+		if (dir == FlxObject.UP) acceleration.y = -maxVelocity.y * 10;
+		if (dir == FlxObject.DOWN) acceleration.y = maxVelocity.y * 10;
 	}
 	
 	override public function update(elapsed:Float):Void 
