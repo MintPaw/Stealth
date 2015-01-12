@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxAngle;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
@@ -79,7 +80,15 @@ class GameState extends FlxState
 	{
 		for (i in _enemies)
 		{
-			
+			for (j in _players)
+			{
+				var ang:Float = FlxAngle.angleBetween(i, j, true) + 90;
+				
+				if (ang > i.angleFacing - i.angleVision && ang < i.angleFacing + i.angleVision && _level.collisionLayer.ray(i.getMidpoint(), j.getMidpoint()))
+				{
+					trace("Seen");
+				}
+			}
 		}
 	}
 }

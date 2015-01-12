@@ -11,6 +11,7 @@ class Enemy extends FlxSprite
 	public var gun:FlxSprite;
 	
 	public var angleFacing:Int = 0;
+	public var angleVision:Int = 15;
 	
 	public function new()
 	{
