@@ -51,4 +51,16 @@ class GameState extends FlxState
 		FlxMintInput.bindToFunction("a", _players.members[0], "move", [FlxObject.LEFT], FlxMintInput.DOWN);
 		FlxMintInput.bindToFunction("d", _players.members[0], "move", [FlxObject.RIGHT], FlxMintInput.DOWN);
 	}
+	
+	override public function update(elapsed:Float):Void 
+	{
+		updateCollisions();
+		
+		super.update(elapsed);
+	}
+	
+	private function updateCollisions():Void
+	{
+		FlxG.collide(_players, _level.collisionLayer);
+	}
 }
