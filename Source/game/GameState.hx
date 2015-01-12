@@ -27,6 +27,8 @@ class GameState extends FlxState
 	private function setupMap():Void
 	{
 		_level = new Level("Assets/map/level0.tmx");
+		
+		add(_level.collisionLayer);
 	}
 	
 	private function setupPlayer():Void

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="40" tileheight="40">
- <tileset firstgid="1" name="metaTiles" tilewidth="40" tileheight="40">
-  <image source="../img/tilesets/metaTiles.png" width="40" height="40"/>
- </tileset>
- <tileset firstgid="3" name="collisionTiles" tilewidth="40" tileheight="40">
-  <image source="../img/tilesets/collisionTiles.png" width="120" height="40"/>
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../img/tileset.png" width="160" height="40"/>
  </tileset>
  <layer name="Meta" width="32" height="18">
   <data encoding="base64" compression="zlib">
@@ -13,7 +10,7 @@
  </layer>
  <layer name="Collision" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYGBgYMGC6QnQ7Ru1f+DtpxfGZj+9wHC0H18447OflPiitv3EglH7qQuGov1DudwZjOX8SLMfHQMAvQgB4Q==
+   eJxjYIAA5gHCMIDMxsanBRhO9hMTxqP2D1/7yQFDyX5qlzfk2E8pGEr2E9I7aj/17Scl7VLbfnqAwWA/OgYAAvcBrg==
   </data>
  </layer>
  <layer name="Visual" width="32" height="18" visible="0">

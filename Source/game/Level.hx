@@ -2,6 +2,7 @@ package game;
 import flixel.addons.editors.tiled.TiledLayer;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.math.FlxPoint;
+import flixel.tile.FlxTilemap;
 
 /**
  * ...
@@ -10,6 +11,9 @@ import flixel.math.FlxPoint;
 class Level
 {
 	public static inline var META_SPAWN:Int = 1;
+	
+	public var collisionLayer:FlxTilemap;
+	public var visualLayer:FlxTilemap;
 	
 	public var spawnPoint:FlxPoint;
 	
@@ -20,6 +24,7 @@ class Level
 		_tiledMap = new TiledMap(mapString);
 		
 		setupMeta();
+		setupCollision();
 	}
 	
 	private function setupMeta():Void
@@ -29,6 +34,16 @@ class Level
 		for (i in 0...metaLayer.tileArray.length) 
 			if (metaLayer.tileArray[i] == META_SPAWN)
 				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, i / metaLayer.width * _tiledMap.tileWidth);
+	}
+	
+	private function setupCollision():Void
+	{
+		var tiledCollisionLayer:TiledLayer = _tiledMap.getLayer("Collision");
+		
+		collisionLayer = new FlxTilemap();
+		collisionLayer.loadMapFromArray(tiledCollisionLayer.tileArray, tiledCollisionLayer.width, tiledCollisionLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
+		
+		trace(tiledCollisionLayer.tileArray);
 	}
 	
 }
