@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "000None.png",
+	"filename": "001Slow.png",
 	"frame": {"x":0,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "001Pass.png",
+	"filename": "002Hit.png",
 	"frame": {"x":40,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -17,24 +17,8 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "002Slow.png",
+	"filename": "003Kill.png",
 	"frame": {"x":80,"y":0,"w":40,"h":40},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
-	"sourceSize": {"w":40,"h":40}
-},
-{
-	"filename": "003Hit.png",
-	"frame": {"x":120,"y":0,"w":40,"h":40},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
-	"sourceSize": {"w":40,"h":40}
-},
-{
-	"filename": "004Kill.png",
-	"frame": {"x":160,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
@@ -45,8 +29,8 @@
 	"version": "1.0",
 	"image": "collisionTiles.png",
 	"format": "RGBA8888",
-	"size": {"w":200,"h":40},
+	"size": {"w":120,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:69c7cb2eafbcee978b51e27ee059033c$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b83f5920f5079575d54ef1ace4dd3dc5$"
 }
 }

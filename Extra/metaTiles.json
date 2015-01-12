@@ -1,16 +1,8 @@
 {"frames": [
 
 {
-	"filename": "000None.png",
+	"filename": "000Spawn.png",
 	"frame": {"x":0,"y":0,"w":40,"h":40},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
-	"sourceSize": {"w":40,"h":40}
-},
-{
-	"filename": "001Spawn.png",
-	"frame": {"x":40,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
@@ -21,8 +13,8 @@
 	"version": "1.0",
 	"image": "metaTiles.png",
 	"format": "RGBA8888",
-	"size": {"w":80,"h":40},
+	"size": {"w":40,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f19eb1eddf8168ed9096c9bae3c7c0ff$"
+	"smartupdate": "$TexturePacker:SmartUpdate:641e9b5476339414eabeb44e6a109115$"
 }
 }
