@@ -7,7 +7,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
-{
+{	
+	private var _level:Level;
+	
 	private var _players:FlxTypedGroup<Player>;
 	
 	public function new()
