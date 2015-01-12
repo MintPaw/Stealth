@@ -41,7 +41,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy2_meta.png",
+	"filename": "006Enemy2_meta.png",
 	"frame": {"x":200,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -49,7 +49,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy3_meta.png",
+	"filename": "007Enemy3_meta.png",
 	"frame": {"x":240,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -57,7 +57,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy4_meta.png",
+	"filename": "008Enemy4_meta.png",
 	"frame": {"x":280,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -65,7 +65,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy5_meta.png",
+	"filename": "009Enemy5_meta.png",
 	"frame": {"x":320,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -73,7 +73,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy6_meta.png",
+	"filename": "010Enemy6_meta.png",
 	"frame": {"x":360,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -81,7 +81,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy7_meta.png",
+	"filename": "011Enemy7_meta.png",
 	"frame": {"x":400,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -89,7 +89,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "005Enemy8_meta.png",
+	"filename": "012Enemy8_meta.png",
 	"frame": {"x":440,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -103,6 +103,6 @@
 	"format": "RGBA8888",
 	"size": {"w":480,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:aa33320dfffee16cde379ad2ea26a2d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:8e1ec39395d082eee91343b9de7962ad$"
 }
 }

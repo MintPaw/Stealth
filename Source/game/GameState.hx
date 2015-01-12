@@ -32,10 +32,7 @@ class GameState extends FlxState
 		add(_level.collisionLayer);
 		add(_level.visualLayer);
 		
-		for (i in _level.enemies)
-		{
-			add(i);
-		}
+		for (i in _level.enemies) add(i);
 	}
 	
 	private function setupPlayer():Void

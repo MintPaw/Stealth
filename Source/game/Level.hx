@@ -11,7 +11,8 @@ import flixel.tile.FlxTilemap;
 class Level
 {
 	public static inline var META_SPAWN:Int = 1;
-	public static inline var META_ENEMY:Int = 5;
+	public static inline var META_ENEMY_START:Int = 5;
+	public static inline var META_ENEMY_END:Int = 12;
 	
 	public var collisionLayer:FlxTilemap;
 	public var visualLayer:FlxTilemap;
@@ -39,7 +40,7 @@ class Level
 			if (metaLayer.tileArray[i] == META_SPAWN)
 				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
 			
-			if (metaLayer.tileArray[i] == META_ENEMY)
+			if (metaLayer.tileArray[i] >= META_ENEMY_START && metaLayer.tileArray[i] <= META_ENEMY_END)
 			{
 				var e:Enemy = new Enemy();
 				e.x = i % metaLayer.width * _tiledMap.tileHeight + e.width / 2;
