@@ -46,6 +46,15 @@ class Level
 				e.x = i % metaLayer.width * _tiledMap.tileHeight + e.width / 2;
 				e.y = Std.int(i / metaLayer.width) * _tiledMap.tileWidth + e.height / 2;
 				enemies.push(e);
+				
+				if (metaLayer.tileArray[i] == 5) e.angleFacing = 0;
+				if (metaLayer.tileArray[i] == 6) e.angleFacing = 180;
+				if (metaLayer.tileArray[i] == 7) e.angleFacing = 270;
+				if (metaLayer.tileArray[i] == 8) e.angleFacing = 90;
+				if (metaLayer.tileArray[i] == 9) e.angleFacing = 45;
+				if (metaLayer.tileArray[i] == 10) e.angleFacing = 135;
+				if (metaLayer.tileArray[i] == 11) e.angleFacing = 225;
+				if (metaLayer.tileArray[i] == 12) e.angleFacing = 315;
 			}
 		}
 		
