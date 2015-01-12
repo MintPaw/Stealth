@@ -35,10 +35,17 @@ class Level
 		var metaLayer:TiledLayer = _tiledMap.getLayer("Meta");
 		
 		for (i in 0...metaLayer.tileArray.length) 
+		{
 			if (metaLayer.tileArray[i] == META_SPAWN)
-				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, i / metaLayer.width * _tiledMap.tileWidth);
-			if (metaLayer.tileArray[i] == META_SPAWN)
-				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, i / metaLayer.width * _tiledMap.tileWidth);
+				spawnPoint = new FlxPoint(
+					i % metaLayer.width * _tiledMap.tileHeight,
+					i / metaLayer.width * _tiledMap.tileWidth);
+				
+			if (metaLayer.tileArray[i] == META_ENEMY)
+				enemies.push(new FlxPoint(
+					i % metaLayer.width * _tiledMap.tileHeight,
+					i / metaLayer.width * _tiledMap.tileWidth));
+		}
 	}
 	
 	private function setupCollision():Void
@@ -46,7 +53,15 @@ class Level
 		var tiledCollisionLayer:TiledLayer = _tiledMap.getLayer("Collision");
 		
 		collisionLayer = new FlxTilemap();
-		collisionLayer.loadMapFromArray(tiledCollisionLayer.tileArray, tiledCollisionLayer.width, tiledCollisionLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
+		collisionLayer.loadMapFromArray(
+			tiledCollisionLayer.tileArray,
+			tiledCollisionLayer.width,
+			tiledCollisionLayer.height,
+			"Assets/img/tileset.png",
+			_tiledMap.tileWidth,
+			_tiledMap.tileHeight,
+			null,
+			1);
 	}
 	
 	private function setupVisual():Void
@@ -54,7 +69,15 @@ class Level
 		var tiledVisualLayer:TiledLayer = _tiledMap.getLayer("Visual");
 		
 		visualLayer = new FlxTilemap();
-		visualLayer.loadMapFromArray(tiledVisualLayer.tileArray, tiledVisualLayer.width, tiledVisualLayer.height, "Assets/img/tileset.png", _tiledMap.tileWidth, _tiledMap.tileHeight, null, 1);
+			visualLayer.loadMapFromArray(
+			tiledVisualLayer.tileArray,
+			tiledVisualLayer.width,
+			tiledVisualLayer.height,
+			"Assets/img/tileset.png",
+			_tiledMap.tileWidth,
+			_tiledMap.tileHeight,
+			null,
+			1);
 	}
 	
 }
