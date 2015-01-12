@@ -32,7 +32,14 @@ class GameState extends FlxState
 		add(_level.collisionLayer);
 		add(_level.visualLayer);
 		
-		for (i in _level.enemies) add(i);
+		_enemies = new FlxTypedGroup<Enemy>();
+		for (i in _level.enemies)
+		{
+			add(i);
+			add(i.gun);
+			
+			_enemies.add(i);
+		}
 	}
 	
 	private function setupPlayer():Void
