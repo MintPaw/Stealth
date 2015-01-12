@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
+	<haxedef name="HXCPP_DEBUGGER" if="debug" />
 	
 	<window width="1280" height="720" />
 	<meta title="Stealth" package="com.sample.project" version="1.0.0" company="Company Name" />
@@ -13,7 +14,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="FlxMintInput" />
 	
-	<assets path="Assets" rename="assets" exclude="openfl.svg" />
+	<assets path="Assets" exclude="openfl.svg" />
 	<icon path="Assets/openfl.svg" />
 	
 </project>
