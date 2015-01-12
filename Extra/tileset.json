@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "000Spawn_meta.png",
+	"filename": "001Spawn_meta.png",
 	"frame": {"x":0,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "001Slow_coll.png",
+	"filename": "002Slow_coll.png",
 	"frame": {"x":40,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -17,7 +17,7 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "002Hit_coll.png",
+	"filename": "003Hit_coll.png",
 	"frame": {"x":80,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
@@ -25,8 +25,16 @@
 	"sourceSize": {"w":40,"h":40}
 },
 {
-	"filename": "003Kill_coll.png",
+	"filename": "004Kill_coll.png",
 	"frame": {"x":120,"y":0,"w":40,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
+	"sourceSize": {"w":40,"h":40}
+},
+{
+	"filename": "005Enemy_meta.png",
+	"frame": {"x":160,"y":0,"w":40,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
@@ -37,8 +45,8 @@
 	"version": "1.0",
 	"image": "tileset.png",
 	"format": "RGBA8888",
-	"size": {"w":160,"h":40},
+	"size": {"w":200,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:2ade1c797e4c4285e0a013c1c7915a5c$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b15d5468b1a6db4fef70d0f57595633d$"
 }
 }

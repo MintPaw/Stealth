@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>json-array</string>
         <key>textureFileName</key>
-        <filename>tileset.png</filename>
+        <filename>../Assets/img/tileset.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
