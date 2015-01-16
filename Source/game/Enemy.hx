@@ -71,16 +71,6 @@ class Enemy extends FlxSprite
 	private function switchState(s:Int):Void
 	{
 		_state = s;
-
-		if (s == SHOOTING)
-		{
-			_tweens.push(FlxTween.tween(this, { angleFacing: FlxAngle.angleBetween(this, _player, true) }, .5, { onComplete: startShooting }));
-		}
-	}
-
-	private function startShooting(t:FlxTween):Void
-	{
-
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -88,6 +78,11 @@ class Enemy extends FlxSprite
 		gun.x = x + width / 2 - gun.width / 2;
 		gun.y = y + height / 2 - gun.width / 2;
 		gun.angle = angleFacing + 180;
+
+		if (_state == SHOOTING)
+		{
+			
+		}
 		
 		super.update(elapsed);
 	}
