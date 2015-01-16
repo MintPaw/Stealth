@@ -14,13 +14,13 @@ class Enemy extends FlxSprite
 	public static var GUESS_SHOOTING:Int = 3;
 	public static var CHASING:Int = 4;
 	public static var MOVING_BACK:Int = 5;
+	public static var RESPOND_TO_CALL:Int = 6;
 	
 	public var gun:FlxSprite;
 	
 	public var angleFacing:Int = 0;
 	public var angleVision:Int = 15;
 	
-	private var _idle:Bool = true;
 	private var _state:Int = 0;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
 
@@ -42,22 +42,36 @@ class Enemy extends FlxSprite
 
 	public function seePlayer(p:Player):Void
 	{
-
+		if (canSwitchState(SHOOTING))
+		{
+			_player = p;
+			switchState(SHOOTING);
+		}
 	}
 
 	private function buildStateMachineDocs():Void
 	{
 		_stateMachineDocs = new Map();
-		_stateMachineDocs.set(IDLE, [SHOOTING, CHASING]);
+		_stateMachineDocs.set(IDLE, [SHOOTING, RESPOND_TO_CALL]);
 		_stateMachineDocs.set(SHOOTING, [GUESS_SHOOTING, CHASING]);
-		_stateMachineDocs.set(GUESS_SHOOTING, [MOVING_BACK]);
+		_stateMachineDocs.set(GUESS_SHOOTING, [MOVING_BACK, RESPOND_TO_CALL]);
 		_stateMachineDocs.set(CHASING, [SHOOTING, MOVING_BACK]);
+		_stateMachineDocs.set(MOVING_BACK, [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
 	
-
-	private function switchState(s:Int):Bool
+	private function canSwitchState(s:Int):Bool
 	{
+		return _stateMachineDocs.get(_state).indexOf(s) >= 0;
+	}
 
+	private function switchState(s:Int):Void
+	{
+		_state = s;
+
+		if (s == SHOOTING)
+		{
+
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
