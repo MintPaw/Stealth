@@ -1,7 +1,9 @@
 package game;
 
 import flixel.FlxSprite;
+import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
+import flixel.tweens.FlxTween;
 
 /**
  * ...
@@ -21,11 +23,13 @@ class Enemy extends FlxSprite
 	public var angleFacing:Int = 0;
 	public var angleVision:Int = 15;
 	
-	private var _state:Int = 0;
+	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
 
 	private var _player:Player;
 	private var _lastSeenPlayer:FlxPoint;
+
+	private var _tweens:Array<FlxTween> = [];
 	
 	public function new()
 	{
@@ -70,8 +74,13 @@ class Enemy extends FlxSprite
 
 		if (s == SHOOTING)
 		{
-
+			_tweens.push(FlxTween.tween(this, { angleFacing: FlxAngle.angleBetween(this, _player, true) }, .5, { onComplete: startShooting }));
 		}
+	}
+
+	private function startShooting(t:FlxTween):Void
+	{
+
 	}
 	
 	override public function update(elapsed:Float):Void 
