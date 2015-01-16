@@ -7,6 +7,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
@@ -107,8 +108,21 @@ class GameState extends FlxState
 		
 		_level.collisionLayer.ray(loc, end, result, 2);
 		
-		var f:FlxSprite = new FlxSprite(result.x, result.y);
-		f.makeGraphic(4, 4, 0xFFCCCCCC);
-		add(f);
+		var hit:Bool = false;
+		for (i in _players)
+		{
+			if (Reg.lineIntersectsRect(loc, result, new FlxRect(i.x, i.y, i.width, i.height)))
+			{
+				i.kill();
+				hit = true;
+			}
+		}
+		
+		if (!hit)
+		{
+			var f:FlxSprite = new FlxSprite(result.x, result.y);
+			f.makeGraphic(4, 4, 0xFFCCCCCC);
+			add(f);
+		}
 	}
 }

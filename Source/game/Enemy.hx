@@ -112,6 +112,8 @@ class Enemy extends FlxSprite
 		var dir:Float = angleFacing + Reg.rnd.float( -spread, spread);
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
 		spread += spreadIncreasePerShot;
+		
+		//((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
 		_framesTillNextShot = ((30 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
 	}
 	
