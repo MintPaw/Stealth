@@ -1,6 +1,7 @@
 package game;
 
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 
 /**
  * ...
@@ -41,7 +42,7 @@ class Enemy extends FlxSprite
 
 	public function seePlayer(p:Player):Void
 	{
-		
+
 	}
 
 	private function buildStateMachineDocs():Void
