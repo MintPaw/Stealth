@@ -75,8 +75,8 @@ class Enemy extends FlxSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		gun.x = x + width / 2 - gun.width / 2;
-		gun.y = y + height / 2 - gun.width / 2;
+		gun.x = x + width / 2 - gun.width / 4;
+		gun.y = y + height / 2 - gun.width / 4;
 		gun.angle = angleFacing + 180;
 		
 		if (_state == SHOOTING)
