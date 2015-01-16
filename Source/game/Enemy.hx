@@ -27,9 +27,9 @@ class Enemy extends FlxSprite
 	public var angleVision:Float = 15;
 	
 	public var spread:Float = 0;
-	public var spreadMinimum:Float = 3;
-	public var spreadIncreasePerShot:Float = 3;
-	public var spreadDecreasePerFrame:Float = .3;
+	public var spreadMinimum:Float = 5;
+	public var spreadIncreasePerShot:Float = 5;
+	public var spreadDecreasePerFrame:Float = .2;
 	
 	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
@@ -102,7 +102,7 @@ class Enemy extends FlxSprite
 			if (_framesTillNextShot <= 0) shoot();
 		}
 		
-		spread = Math.max(spread - spreadDecreasePerFrame, spreadMinimum);
+		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
 		
 		super.update(elapsed);
 	}
@@ -114,7 +114,7 @@ class Enemy extends FlxSprite
 		spread += spreadIncreasePerShot;
 		
 		//((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
-		_framesTillNextShot = ((30 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
+		_framesTillNextShot = ((45 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
 	}
 	
 }
