@@ -2,8 +2,10 @@ package game;
 
 import flixel.FlxSprite;
 import flixel.math.FlxAngle;
+import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
+import haxe.Constraints.Function;
 
 /**
  * ...
@@ -19,9 +21,15 @@ class Enemy extends FlxSprite
 	public static var RESPOND_TO_CALL:Int = 6;
 	
 	public var gun:FlxSprite;
+	public var shootCallback:Function;
 	
 	public var angleFacing:Float = 0;
 	public var angleVision:Float = 15;
+	
+	public var spread:Float = 0;
+	public var spreadMinimum:Float = 3;
+	public var spreadIncreasePerShot:Float = 3;
+	public var spreadDecreasePerFrame:Float = .5;
 	
 	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
@@ -30,6 +38,8 @@ class Enemy extends FlxSprite
 	private var _lastSeenPlayer:FlxPoint;
 
 	private var _tweens:Array<FlxTween> = [];
+	
+	private var _framesTillNextShot:Float = 0;
 	
 	public function new()
 	{
@@ -87,9 +97,21 @@ class Enemy extends FlxSprite
 			if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
 			
 			angleFacing += difference / 6;
+			
+			_framesTillNextShot -= 1;
+			if (_framesTillNextShot <= 0) shoot();
 		}
 		
+		spread = Math.max(spread - spreadDecreasePerFrame, spreadMinimum);
 		super.update(elapsed);
+	}
+	
+	private function shoot():Void
+	{
+		var dir:Float = angleFacing + Reg.rnd.float( -spread, spread);
+		//Reflect.callMethod(this, shootCallback, [getMidpoint().x, getMidpoint().y, dir]);
+		spread += spreadIncreasePerShot;
+		_framesTillNextShot = ((30 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
 	}
 	
 }
