@@ -2,9 +2,11 @@ package game;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxAngle;
+import flixel.math.FlxPoint;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
@@ -36,6 +38,7 @@ class GameState extends FlxState
 		_enemies = new FlxTypedGroup<Enemy>();
 		for (i in _level.enemies)
 		{
+			i.shootCallback = shoot;
 			add(i);
 			add(i.gun);
 			
@@ -90,5 +93,22 @@ class GameState extends FlxState
 				}
 			}
 		}
+	}
+	
+	private function shoot(loc:FlxPoint, dir:Float):Void
+	{
+		var result:FlxPoint = new FlxPoint();
+		var end:FlxPoint = new FlxPoint();
+		
+		loc.copyTo(end);
+		
+		end.x += Math.cos(dir * FlxAngle.TO_RAD) * 1500;
+		end.y += Math.sin(dir * FlxAngle.TO_RAD) * 1500;
+		
+		_level.collisionLayer.ray(loc, end, result, 2);
+		
+		var f:FlxSprite = new FlxSprite(result.x, result.y);
+		f.makeGraphic(4, 4, 0xFFCCCCCC);
+		add(f);
 	}
 }

@@ -29,7 +29,7 @@ class Enemy extends FlxSprite
 	public var spread:Float = 0;
 	public var spreadMinimum:Float = 3;
 	public var spreadIncreasePerShot:Float = 3;
-	public var spreadDecreasePerFrame:Float = .5;
+	public var spreadDecreasePerFrame:Float = .3;
 	
 	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
@@ -103,13 +103,14 @@ class Enemy extends FlxSprite
 		}
 		
 		spread = Math.max(spread - spreadDecreasePerFrame, spreadMinimum);
+		
 		super.update(elapsed);
 	}
 	
 	private function shoot():Void
 	{
 		var dir:Float = angleFacing + Reg.rnd.float( -spread, spread);
-		//Reflect.callMethod(this, shootCallback, [getMidpoint().x, getMidpoint().y, dir]);
+		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
 		spread += spreadIncreasePerShot;
 		_framesTillNextShot = ((30 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
 	}
