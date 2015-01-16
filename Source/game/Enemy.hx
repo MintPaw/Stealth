@@ -20,8 +20,8 @@ class Enemy extends FlxSprite
 	
 	public var gun:FlxSprite;
 	
-	public var angleFacing:Int = 0;
-	public var angleVision:Int = 15;
+	public var angleFacing:Float = 0;
+	public var angleVision:Float = 15;
 	
 	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
@@ -78,10 +78,15 @@ class Enemy extends FlxSprite
 		gun.x = x + width / 2 - gun.width / 2;
 		gun.y = y + height / 2 - gun.width / 2;
 		gun.angle = angleFacing + 180;
-
+		
 		if (_state == SHOOTING)
 		{
+			var playerAngle:Float = FlxAngle.angleBetween(this, _player, true);
+			var difference:Float = (playerAngle - angleFacing) + 90;
 			
+			if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
+			
+			angleFacing += difference / 6;
 		}
 		
 		super.update(elapsed);
