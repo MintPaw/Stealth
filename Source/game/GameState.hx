@@ -113,7 +113,7 @@ class GameState extends FlxState
 		{
 			if (Reg.lineIntersectsRect(loc, result, new FlxRect(i.x, i.y, i.width, i.height)))
 			{
-				i.kill();
+				i.hurt(1);
 				hit = true;
 			}
 		}
