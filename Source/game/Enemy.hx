@@ -115,6 +115,7 @@ class Enemy extends FlxSprite
 		
 		//((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
 		_framesTillNextShot = ((45 - 6) * (FlxMath.distanceBetween(this, _player) - 50) / (500 - 50)) + 6;
+		_framesTillNextShot *= Reg.rnd.float(0.8, 1.2);
 	}
 	
 }
