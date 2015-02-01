@@ -1,0 +1,8 @@
+buildflashdebug = lime build project.xml flash -debug -Dfdb
+buildflash = lime build project.xml flash
+
+buildwindowsdebug = lime build project.xml flash -debug -Dfdb
+buildwindows = lime build project.xml flash
+
+runflash = start Export\flash\bin\Stealth.swf
+runwindows = start Export\windows\cpp\bin\Stealth.exe
