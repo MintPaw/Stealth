@@ -1,1 +1,1 @@
-lime build B:\project.xml flash -debug -Dfd
+lime build B:\project.xml flash -debug -Dfdb
