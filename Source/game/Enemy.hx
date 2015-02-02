@@ -107,6 +107,8 @@ class Enemy extends FlxSprite
 	
 	private function shoot():Void
 	{
+		Sm.playEffect(Sm.ENEMY_SHOOT);
+		
 		var dir:Float = angleFacing + Reg.rnd.float( -spread, spread);
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
 		spread += spreadIncreasePerShot;
