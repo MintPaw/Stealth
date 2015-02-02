@@ -66,7 +66,7 @@ class Enemy extends FlxSprite
 	{
 		_stateMachineDocs = new Map();
 		_stateMachineDocs.set(IDLE, [SHOOTING, RESPOND_TO_CALL]);
-		_stateMachineDocs.set(SHOOTING, [GUESS_SHOOTING, CHASING]);
+		_stateMachineDocs.set(SHOOTING, [CHASING]);
 		_stateMachineDocs.set(CHASING, [SHOOTING, MOVING_BACK]);
 		_stateMachineDocs.set(MOVING_BACK, [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
