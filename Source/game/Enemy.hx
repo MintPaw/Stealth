@@ -118,6 +118,7 @@ class Enemy extends FlxSprite
 			if (_canSeePlayer)
 			{
 				timeTillLoseVision = timeTillLoseVisionMax;
+				aimAtPlayerPosition();
 			} else {
 				timeTillLoseVision -= elapsed;
 				if (timeTillLoseVision <= 0)
@@ -129,8 +130,6 @@ class Enemy extends FlxSprite
 			
 			_framesTillNextShot -= 1;
 			if (_framesTillNextShot <= 0) shoot();	
-			
-			aimAtPlayerPosition();
 		}
 		
 		if (_state == CHASING)
