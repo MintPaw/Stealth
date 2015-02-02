@@ -1,1 +1,1 @@
-lime build B:\project.xml flash
+lime build B:\project.xml windows
