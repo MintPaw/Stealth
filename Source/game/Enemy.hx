@@ -15,7 +15,6 @@ class Enemy extends FlxSprite
 {	
 	public static var IDLE:Int = 1;
 	public static var SHOOTING:Int = 2;
-	public static var GUESS_SHOOTING:Int = 3;
 	public static var CHASING:Int = 4;
 	public static var MOVING_BACK:Int = 5;
 	public static var RESPOND_TO_CALL:Int = 6;
@@ -68,7 +67,6 @@ class Enemy extends FlxSprite
 		_stateMachineDocs = new Map();
 		_stateMachineDocs.set(IDLE, [SHOOTING, RESPOND_TO_CALL]);
 		_stateMachineDocs.set(SHOOTING, [GUESS_SHOOTING, CHASING]);
-		_stateMachineDocs.set(GUESS_SHOOTING, [MOVING_BACK, RESPOND_TO_CALL]);
 		_stateMachineDocs.set(CHASING, [SHOOTING, MOVING_BACK]);
 		_stateMachineDocs.set(MOVING_BACK, [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
