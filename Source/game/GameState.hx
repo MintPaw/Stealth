@@ -40,6 +40,7 @@ class GameState extends FlxState
 		for (i in _level.enemies)
 		{
 			i.shootCallback = shoot;
+			i.getRouteCallback = getRoute;
 			add(i);
 			add(i.gun);
 			
@@ -131,5 +132,10 @@ class GameState extends FlxState
 			f.makeGraphic(4, 4, 0xFFCCCCCC);
 			add(f);
 		}
+	}
+	
+	private function getRoute(start:FlxPoint, end:FlxPoint):Array<FlxPoint>
+	{
+		return _level.collisionLayer.findPath(start, end);
 	}
 }

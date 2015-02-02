@@ -5,6 +5,7 @@ import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxPath;
 import haxe.Constraints.Function;
 
 /**
@@ -20,9 +21,15 @@ class Enemy extends FlxSprite
 	public static var MOVING_BACK:Int = 5;
 	public static var RESPOND_TO_CALL:Int = 6;
 	
+	// Callbacks
+	public var shootCallback:Function;
+	public var getRouteCallback:Function;
+	
 	// Gun vars
 	public var gun:FlxSprite;
-	public var shootCallback:Function;
+	
+	// Misc public
+	public var speed:Float = 100;
 	
 	// Vision vars
 	public var angleFacing:Float = 0;
@@ -43,12 +50,15 @@ class Enemy extends FlxSprite
 	// Player vars
 	private var _player:Player;
 	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
+	private var _canSeePlayer:Bool = false;
 	
 	// Note: may remove
 	private var _tweens:Array<FlxTween> = [];
 	
 	// Misc
 	private var _framesTillNextShot:Float = 0;
+	
+	private var _chasePath:FlxPath;
 	
 	public function new()
 	{
@@ -68,13 +78,14 @@ class Enemy extends FlxSprite
 		if (canSwitchState(SHOOTING))
 		{
 			_player = p;
+			_canSeePlayer = true;
 			switchState(SHOOTING);
 		}
 	}
 	
 	public function losePlayer():Void
 	{
-		_player = null;
+		_canSeePlayer = false;
 	}
 
 	private function buildStateMachineDocs():Void
@@ -105,28 +116,53 @@ class Enemy extends FlxSprite
 		if (_state == SHOOTING)
 		{
 			// Update time till the enemy loses vision on the player and chases
-			if (_player == null)
+			if (_canSeePlayer)
 			{
-				timeTillLoseVision -= elapsed;
-				if (timeTillLoseVision <= 0) switchState(CHASING);
-			} else {
-				_player.getMidpoint(_lastSeenPlayer);
 				timeTillLoseVision = timeTillLoseVisionMax;
 			}
 			
-			// Aim and shoot at the player's last known position
-			var playerAngle:Float = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true);
-			var difference:Float = (playerAngle - angleFacing) + 90;
-			if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
-			angleFacing += difference / 6;
+			timeTillLoseVision -= elapsed;
+			if (timeTillLoseVision <= 0)
+			{
+				_player = null;
+				switchState(CHASING);
+			}
 			
 			_framesTillNextShot -= 1;
 			if (_framesTillNextShot <= 0) shoot();	
+			
+			aimAtPlayerPosition();
+		}
+		
+		if (_state == CHASING)
+		{
+			if (_chasePath == null)
+			{
+				_chasePath = new FlxPath();
+				var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), _lastSeenPlayer]);
+				_chasePath.start(this, route, speed);
+				_chasePath.drawDebug();
+			}
+			
+			aimAtPlayerPosition();
 		}
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
 		
+		if (_player != null)
+		{
+			_player.getMidpoint(_lastSeenPlayer);
+		}
+		
 		super.update(elapsed);
+	}
+	
+	private function aimAtPlayerPosition():Void
+	{
+		var playerAngle:Float = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true);
+		var difference:Float = (playerAngle - angleFacing) + 90;
+		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
+		angleFacing += difference / 6;
 	}
 	
 	private function shoot():Void
