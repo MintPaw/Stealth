@@ -1,0 +1,1 @@
+start b:\Export\windows\cpp\bin\Stealth.exe

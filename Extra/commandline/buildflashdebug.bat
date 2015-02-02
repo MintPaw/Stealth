@@ -1,0 +1,1 @@
+lime build B:\project.xml windows -debug -Dfdb
