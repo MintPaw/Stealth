@@ -171,7 +171,7 @@ class Enemy extends FlxSprite
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
 		spread += spreadIncreasePerShot;
 		
-		_framesTillNextShot = FlxMath.lerp(3, 45, FlxMath.distanceToPoint(this, _lastSeenPlayer) / 500);
+		_framesTillNextShot = FlxMath.lerp(9, 45, FlxMath.distanceToPoint(this, _lastSeenPlayer) / 500);
 		_framesTillNextShot *= Reg.rnd.float(0.8, 1.2);
 	}
 	
