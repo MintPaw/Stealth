@@ -130,6 +130,9 @@ class Enemy extends FlxSprite
 				if (timeTillLoseVision <= 0)
 				{
 					_player = null;
+					
+					moveToPosition(_lastSeenPlayer, true, false, function () { _lastSeenPlayer = null; switchState(MOVING_BACK); } , null, 2);
+					
 					switchState(CHASING);
 				}
 			}
@@ -140,12 +143,7 @@ class Enemy extends FlxSprite
 		
 		if (_state == CHASING)
 		{
-			if (_lastSeenPlayer != null)
-			{
-				moveToPosition(_lastSeenPlayer, true, false, function () { _lastSeenPlayer = null; switchState(MOVING_BACK); } , null, 2);
-				
-				aimAtPlayerPosition();
-			}
+			aimAtPlayerPosition();
 		}
 		
 		/*
