@@ -1,1 +1,1 @@
-start b:\Export\flash\bin\Stealth.swf
+b:\Export\flash\bin\Stealth.swf
