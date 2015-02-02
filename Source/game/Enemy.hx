@@ -6,6 +6,7 @@ import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxPath;
+import flixel.util.FlxTimer;
 import haxe.Constraints.Function;
 
 /**
@@ -57,14 +58,22 @@ class Enemy extends FlxSprite
 	
 	// Misc
 	private var _framesTillNextShot:Float = 0;
+	private var _spawnPoint:FlxPoint;
+	private var _spawnAngle:Float;
 	
 	private var _chasePath:FlxPath;
 	
-	public function new()
+	public function new(xpos:Float, ypos:Float, startAngle:Float)
 	{
 		super();
 		
 		makeGraphic(20, 20, 0xFFFF00FF);
+		
+		x = xpos + width / 2;
+		y = ypos + height / 2;
+		angleFacing = startAngle;
+		_spawnAngle = startAngle;
+		_spawnPoint = getMidpoint();
 		
 		gun = new FlxSprite();
 		gun.makeGraphic(5, 20, 0xFF000000);
@@ -79,6 +88,7 @@ class Enemy extends FlxSprite
 		{
 			_player = p;
 			_canSeePlayer = true;
+			_lastSeenPlayer = _player.getMidpoint();
 			switchState(SHOOTING);
 		}
 	}
@@ -134,15 +144,25 @@ class Enemy extends FlxSprite
 		
 		if (_state == CHASING)
 		{
-			if (_chasePath == null)
+			if (_lastSeenPlayer != null)
 			{
-				_chasePath = new FlxPath();
-				var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), _lastSeenPlayer]);
-				route.pop();
-				_chasePath.start(this, route, speed);
+				if (_chasePath == null)
+				{
+					_chasePath = new FlxPath();
+					var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), _lastSeenPlayer]);
+					route.pop();
+					_chasePath.start(this, route, speed);
+				}
+				
+				if (_chasePath.finished)
+				{
+					_chasePath = null;
+					_lastSeenPlayer = null;
+					new FlxTimer().start(2, function (t:FlxTimer) { switchState(MOVING_BACK); } );
+				} else {
+					aimAtPlayerPosition();
+				}
 			}
-			
-			aimAtPlayerPosition();
 		}
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);

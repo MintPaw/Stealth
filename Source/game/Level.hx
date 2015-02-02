@@ -42,19 +42,22 @@ class Level
 			
 			if (metaLayer.tileArray[i] >= META_ENEMY_START && metaLayer.tileArray[i] <= META_ENEMY_END)
 			{
-				var e:Enemy = new Enemy();
-				e.x = i % metaLayer.width * _tiledMap.tileHeight + e.width / 2;
-				e.y = Std.int(i / metaLayer.width) * _tiledMap.tileWidth + e.height / 2;
-				enemies.push(e);
+				var angle:Float = 0;
 				
-				if (metaLayer.tileArray[i] == 5) e.angleFacing = 0;
-				if (metaLayer.tileArray[i] == 6) e.angleFacing = 180;
-				if (metaLayer.tileArray[i] == 7) e.angleFacing = 270;
-				if (metaLayer.tileArray[i] == 8) e.angleFacing = 90;
-				if (metaLayer.tileArray[i] == 9) e.angleFacing = 45;
-				if (metaLayer.tileArray[i] == 10) e.angleFacing = 135;
-				if (metaLayer.tileArray[i] == 11) e.angleFacing = 225;
-				if (metaLayer.tileArray[i] == 12) e.angleFacing = 315;
+				if (metaLayer.tileArray[i] == 5) angle = 0;
+				if (metaLayer.tileArray[i] == 6) angle = 180;
+				if (metaLayer.tileArray[i] == 7) angle = 270;
+				if (metaLayer.tileArray[i] == 8) angle = 90;
+				if (metaLayer.tileArray[i] == 9) angle = 45;
+				if (metaLayer.tileArray[i] == 10) angle = 135;
+				if (metaLayer.tileArray[i] == 11) angle = 225;
+				if (metaLayer.tileArray[i] == 12) angle = 315;
+				
+				var e:Enemy = new Enemy(
+					i % metaLayer.width * _tiledMap.tileHeight, 
+					Std.int(i / metaLayer.width) * _tiledMap.tileWidth, 
+					angle);
+				enemies.push(e);
 			}
 		}
 		
