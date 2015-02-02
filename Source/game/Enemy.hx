@@ -34,7 +34,7 @@ class Enemy extends FlxSprite
 	// Vision vars
 	public var angleFacing:Float = 0;
 	public var angleVision:Float = 15;
-	public var timeTillLoseVisionMax:Float = 1;
+	public var timeTillLoseVisionMax:Float = .5;
 	public var timeTillLoseVision:Float;
 	
 	// Spread vars
@@ -115,17 +115,16 @@ class Enemy extends FlxSprite
 		
 		if (_state == SHOOTING)
 		{
-			// Update time till the enemy loses vision on the player and chases
 			if (_canSeePlayer)
 			{
 				timeTillLoseVision = timeTillLoseVisionMax;
-			}
-			
-			timeTillLoseVision -= elapsed;
-			if (timeTillLoseVision <= 0)
-			{
-				_player = null;
-				switchState(CHASING);
+			} else {
+				timeTillLoseVision -= elapsed;
+				if (timeTillLoseVision <= 0)
+				{
+					_player = null;
+					switchState(CHASING);
+				}
 			}
 			
 			_framesTillNextShot -= 1;
@@ -140,8 +139,8 @@ class Enemy extends FlxSprite
 			{
 				_chasePath = new FlxPath();
 				var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), _lastSeenPlayer]);
+				route.pop();
 				_chasePath.start(this, route, speed);
-				_chasePath.drawDebug();
 			}
 			
 			aimAtPlayerPosition();
