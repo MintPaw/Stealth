@@ -12,32 +12,42 @@ import haxe.Constraints.Function;
  * @author MintPaw
  */
 class Enemy extends FlxSprite
-{	
+{
+	// FSM consts
 	public static var IDLE:Int = 1;
 	public static var SHOOTING:Int = 2;
 	public static var CHASING:Int = 4;
 	public static var MOVING_BACK:Int = 5;
 	public static var RESPOND_TO_CALL:Int = 6;
 	
+	// Gun vars
 	public var gun:FlxSprite;
 	public var shootCallback:Function;
 	
+	// Vision vars
 	public var angleFacing:Float = 0;
 	public var angleVision:Float = 15;
+	public var timeTillLoseVisionMax:Float = 1.5;
+	public var timeTillLoseVision:Float = 1.5;
 	
-	public var spread:Float = 0;
+	// Spread vars
 	public var spreadMinimum:Float = 5;
+	public var spread:Float = 0;
 	public var spreadIncreasePerShot:Float = 5;
 	public var spreadDecreasePerFrame:Float = .2;
 	
+	// FSM vars
 	private var _state:Int = IDLE;
 	private var _stateMachineDocs:Map<Int, Array<Int>>;
-
+	
+	// Player vars
 	private var _player:Player;
-	private var _lastSeenPlayer:FlxPoint;
-
+	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
+	
+	// Note: may remove
 	private var _tweens:Array<FlxTween> = [];
 	
+	// Misc
 	private var _framesTillNextShot:Float = 0;
 	
 	public function new()
@@ -60,6 +70,11 @@ class Enemy extends FlxSprite
 			_player = p;
 			switchState(SHOOTING);
 		}
+	}
+	
+	public function losePlayer():Void
+	{
+		_player = null;
 	}
 
 	private function buildStateMachineDocs():Void
@@ -89,15 +104,24 @@ class Enemy extends FlxSprite
 		
 		if (_state == SHOOTING)
 		{
-			var playerAngle:Float = FlxAngle.angleBetween(this, _player, true);
+			// Update time till the enemy loses vision on the player and chases
+			if (_player == null)
+			{
+				timeTillLoseVision -= elapsed;
+				if (timeTillLoseVision <= 0) switchState(CHASING);
+			} else {
+				_player.getMidpoint(_lastSeenPlayer);
+				timeTillLoseVision = timeTillLoseVisionMax;
+			}
+			
+			// Aim and shoot at the player's last known position
+			var playerAngle:Float = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true);
 			var difference:Float = (playerAngle - angleFacing) + 90;
-			
 			if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
-			
 			angleFacing += difference / 6;
 			
 			_framesTillNextShot -= 1;
-			if (_framesTillNextShot <= 0) shoot();
+			if (_framesTillNextShot <= 0) shoot();	
 		}
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
@@ -113,7 +137,7 @@ class Enemy extends FlxSprite
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
 		spread += spreadIncreasePerShot;
 		
-		_framesTillNextShot = FlxMath.lerp(3, 45, FlxMath.distanceBetween(this, _player) / 500);
+		_framesTillNextShot = FlxMath.lerp(3, 45, FlxMath.distanceToPoint(this, _lastSeenPlayer) / 500);
 		_framesTillNextShot *= Reg.rnd.float(0.8, 1.2);
 	}
 	

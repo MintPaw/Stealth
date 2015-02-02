@@ -90,9 +90,14 @@ class GameState extends FlxState
 				var lowerAngle:Float = i.angleFacing - i.angleVision;
 				var upperAngle:Float = i.angleFacing + i.angleVision;
 				
-				if (ang > lowerAngle && ang < upperAngle && _level.collisionLayer.ray(i.getMidpoint(), j.getMidpoint()))
+				if (_level.collisionLayer.ray(i.getMidpoint(), j.getMidpoint()))
 				{
-					i.seePlayer(j);
+					if (ang > lowerAngle && ang < upperAngle)
+					{
+						i.seePlayer(j);
+					}
+				} else {
+					i.losePlayer();
 				}
 			}
 		}
