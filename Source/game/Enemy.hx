@@ -142,21 +142,20 @@ class Enemy extends FlxSprite
 		{
 			if (_lastSeenPlayer != null)
 			{
-				if (_path == null)
-				{
-					moveToPosition(_lastSeenPlayer, true);
-				}
+				moveToPosition(_lastSeenPlayer, true, false, function () { _lastSeenPlayer = null; switchState(MOVING_BACK); } , null, 2);
 				
-				if (_path.finished)
-				{
-					_path = null;
-					_lastSeenPlayer = null;
-					new FlxTimer().start(2, function (t:FlxTimer) { switchState(MOVING_BACK); } );
-				} else {
-					aimAtPlayerPosition();
-				}
+				aimAtPlayerPosition();
 			}
 		}
+		
+		/*
+		if (_state == MOVING_BACK)
+		{
+			if (_path == null)
+			{
+				moveToPosition(_spawnPoint);
+			}
+		}*/
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
 		
@@ -168,12 +167,19 @@ class Enemy extends FlxSprite
 		super.update(elapsed);
 	}
 	
-	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false):Void
+	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false, force:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
 	{
+		if (_path != null && !force) return;
+		
 		_path = new FlxPath();
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
 		_path.start(this, route, speed);
+		
+		if (onComplete == null) return;
+		if (onCompleteParams == null) onCompleteParams = [];
+		var timer:FlxTimer = new FlxTimer().start(onCompleteDelay, function (t:FlxTimer) { Reflect.callMethod(this, onComplete, onCompleteParams); } ) ;
+		_path.onComplete = function (p:FlxPath) { timer.start(onCompleteDelay); };
 	}
 	
 	private function aimAtPlayerPosition():Void
