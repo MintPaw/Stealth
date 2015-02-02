@@ -53,14 +53,10 @@ class Enemy extends FlxSprite
 	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
 	private var _canSeePlayer:Bool = false;
 	
-	// Note: may remove
-	private var _tweens:Array<FlxTween> = [];
-	
 	// Misc
 	private var _framesTillNextShot:Float = 0;
 	private var _spawnPoint:FlxPoint;
 	private var _spawnAngle:Float;
-	
 	private var _chasePath:FlxPath;
 	
 	public function new(xpos:Float, ypos:Float, startAngle:Float)
