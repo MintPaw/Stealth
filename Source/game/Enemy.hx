@@ -1,5 +1,6 @@
 package game;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
@@ -131,9 +132,7 @@ class Enemy extends FlxSprite
 				{
 					_player = null;
 					
-					moveToPosition(_lastSeenPlayer, true, false, function () { _lastSeenPlayer = null; switchState(MOVING_BACK); } , null, 2);
-					
-					switchState(CHASING);
+					chasePlayer();
 				}
 			}
 			
@@ -146,15 +145,6 @@ class Enemy extends FlxSprite
 			aimAtPlayerPosition();
 		}
 		
-		/*
-		if (_state == MOVING_BACK)
-		{
-			if (_path == null)
-			{
-				moveToPosition(_spawnPoint);
-			}
-		}*/
-		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
 		
 		if (_player != null)
@@ -165,6 +155,19 @@ class Enemy extends FlxSprite
 		super.update(elapsed);
 	}
 	
+	private function chasePlayer():Void
+	{
+		moveToPosition(_lastSeenPlayer, true, false, function () { moveBack(); } , null, 2);
+		switchState(CHASING);
+	}
+	
+	private function moveBack():Void
+	{
+		_lastSeenPlayer = null;
+		switchState(MOVING_BACK);
+		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; });
+	}
+	
 	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false, force:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
 	{
 		if (_path != null && !force) return;
@@ -172,12 +175,14 @@ class Enemy extends FlxSprite
 		_path = new FlxPath();
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
-		_path.start(this, route, speed);
 		
-		if (onComplete == null) return;
-		if (onCompleteParams == null) onCompleteParams = [];
-		var timer:FlxTimer = new FlxTimer().start(onCompleteDelay, function (t:FlxTimer) { Reflect.callMethod(this, onComplete, onCompleteParams); } ) ;
-		_path.onComplete = function (p:FlxPath) { timer.start(onCompleteDelay); };
+		if (onComplete != null)
+		{
+			if (onCompleteParams == null) onCompleteParams = [];
+			_path.onComplete = function (p:FlxPath) { new FlxTimer().start(onCompleteDelay, function (t:FlxTimer) { Reflect.callMethod(this, onComplete, onCompleteParams); } ); };
+		}
+		
+		_path.start(this, route, speed);
 	}
 	
 	private function aimAtPlayerPosition():Void
