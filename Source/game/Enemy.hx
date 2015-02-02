@@ -27,8 +27,8 @@ class Enemy extends FlxSprite
 	// Vision vars
 	public var angleFacing:Float = 0;
 	public var angleVision:Float = 15;
-	public var timeTillLoseVisionMax:Float = 1.5;
-	public var timeTillLoseVision:Float = 1.5;
+	public var timeTillLoseVisionMax:Float = 1;
+	public var timeTillLoseVision:Float;
 	
 	// Spread vars
 	public var spreadMinimum:Float = 5;
