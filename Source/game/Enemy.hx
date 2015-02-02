@@ -57,7 +57,7 @@ class Enemy extends FlxSprite
 	private var _framesTillNextShot:Float = 0;
 	private var _spawnPoint:FlxPoint;
 	private var _spawnAngle:Float;
-	private var _chasePath:FlxPath;
+	private var _path:FlxPath;
 	
 	public function new(xpos:Float, ypos:Float, startAngle:Float)
 	{
@@ -142,17 +142,14 @@ class Enemy extends FlxSprite
 		{
 			if (_lastSeenPlayer != null)
 			{
-				if (_chasePath == null)
+				if (_path == null)
 				{
-					_chasePath = new FlxPath();
-					var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), _lastSeenPlayer]);
-					route.pop();
-					_chasePath.start(this, route, speed);
+					moveToPosition(_lastSeenPlayer, true);
 				}
 				
-				if (_chasePath.finished)
+				if (_path.finished)
 				{
-					_chasePath = null;
+					_path = null;
 					_lastSeenPlayer = null;
 					new FlxTimer().start(2, function (t:FlxTimer) { switchState(MOVING_BACK); } );
 				} else {
@@ -169,6 +166,14 @@ class Enemy extends FlxSprite
 		}
 		
 		super.update(elapsed);
+	}
+	
+	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false):Void
+	{
+		_path = new FlxPath();
+		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
+		if (removeLastPoint) route.pop();
+		_path.start(this, route, speed);
 	}
 	
 	private function aimAtPlayerPosition():Void
