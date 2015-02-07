@@ -157,21 +157,20 @@ class Enemy extends FlxSprite
 	
 	private function chasePlayer():Void
 	{
-		moveToPosition(_lastSeenPlayer, true, false, function () { moveBack(); } , null, 2);
+		moveToPosition(_lastSeenPlayer, true, function () { moveBack(); } , null, 2);
 		switchState(CHASING);
 	}
 	
 	private function moveBack():Void
 	{
+		trace("Going back to " + _spawnPoint.toString());
 		_lastSeenPlayer = null;
 		switchState(MOVING_BACK);
-		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; });
+		moveToPosition(_spawnPoint, false, function () { angleFacing = _spawnAngle; });
 	}
 	
-	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false, force:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
+	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
 	{
-		if (_path != null && !force) return;
-		
 		_path = new FlxPath();
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
