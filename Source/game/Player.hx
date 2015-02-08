@@ -2,6 +2,7 @@ package game;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 
 /**
  * ...
@@ -34,5 +35,17 @@ class Player extends FlxSprite
 		
 		acceleration.set();
 	}
-	
+
+	override public function kill():Void
+	{
+		
+	}
+
+	override public function getMidpoint(p:FlxPoint = null):FlxPoint
+	{
+		if (p == null) p = new FlxPoint();
+		p.x = x + width / 2;
+		p.y = y + height / 2;
+		return p;
+	}
 }

@@ -57,6 +57,7 @@ class Enemy extends FlxSprite
 	
 	// Misc
 	private var _framesTillNextShot:Float = 0;
+	private var _framesTillMoveBack:Float = 0;
 	private var _spawnPoint:FlxPoint;
 	private var _spawnAngle:Float;
 	private var _path:FlxPath;
@@ -116,6 +117,7 @@ class Enemy extends FlxSprite
 	private function switchState(s:Int):Void
 	{
 		_state = s;
+		FlxG.log.add("Switched to: " + s);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -143,6 +145,12 @@ class Enemy extends FlxSprite
 		if (_state == CHASING)
 		{
 			aimAtPlayerPosition();
+		}
+
+		if (_state == WATCHING)
+		{
+			_framesTillMoveBack--;
+			if (_framesTillMoveBack <= 0) moveBack();
 		}
 
 		if (_state == MOVING_BACK)
@@ -190,7 +198,7 @@ class Enemy extends FlxSprite
 	private function watch():Void
 	{
 		if (canSwitchState(WATCHING) && _path != null && _path.finished) switchState(WATCHING) else return;
-		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
+		_framesTillMoveBack = 120;
 	}
 
 	private function backIdle():Void
@@ -205,7 +213,10 @@ class Enemy extends FlxSprite
 			if (_path != null && !_path.finished) return;
 		}
 
+		if (_path != null) _path.cancel();
+
 		_path = new FlxPath();
+		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
 		
