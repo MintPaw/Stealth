@@ -176,6 +176,7 @@ class Enemy extends FlxSprite
 	private function chasePlayer():Void
 	{
 		moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
+		angleVision *= 5;
 		switchState(CHASING);
 	}
 	
@@ -183,13 +184,18 @@ class Enemy extends FlxSprite
 	{
 		if (canSwitchState(MOVING_BACK)) switchState(MOVING_BACK) else return;
 		_lastSeenPlayer = null;
-		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; switchState(1); } );
+		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; backIdle(); } );
 	}
 	
 	private function watch():Void
 	{
 		if (canSwitchState(WATCHING) && _path != null && _path.finished) switchState(WATCHING) else return;
 		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
+	}
+
+	private function backIdle():Void
+	{
+		angleVision /= 5;
 	}
 	
 	private function moveToPosition(pos:FlxPoint, force:Bool = false, removeLastPoint:Bool = false, onComplete:Function = null):Void
