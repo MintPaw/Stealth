@@ -19,6 +19,7 @@ class Enemy extends FlxSprite
 	// FSM consts
 	public static var IDLE:Int = 1;
 	public static var SHOOTING:Int = 2;
+	public static var WATCHING:Int = 3;
 	public static var CHASING:Int = 4;
 	public static var MOVING_BACK:Int = 5;
 	public static var RESPOND_TO_CALL:Int = 6;
@@ -63,6 +64,8 @@ class Enemy extends FlxSprite
 	public function new(xpos:Float, ypos:Float, startAngle:Float)
 	{
 		super();
+
+		FlxG.watch.add(this, "_state");
 		
 		makeGraphic(20, 20, 0xFFFF00FF);
 		
@@ -100,7 +103,8 @@ class Enemy extends FlxSprite
 		_stateMachineDocs = new Map();
 		_stateMachineDocs.set(IDLE, [SHOOTING, RESPOND_TO_CALL]);
 		_stateMachineDocs.set(SHOOTING, [CHASING]);
-		_stateMachineDocs.set(CHASING, [SHOOTING, MOVING_BACK]);
+		_stateMachineDocs.set(CHASING, [SHOOTING, WATCHING]);
+		_stateMachineDocs.set(WATCHING, [SHOOTING, RESPOND_TO_CALL, MOVING_BACK]);
 		_stateMachineDocs.set(MOVING_BACK, [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
 	
@@ -144,6 +148,11 @@ class Enemy extends FlxSprite
 		{
 			aimAtPlayerPosition();
 		}
+
+		if (_state == MOVING_BACK)
+		{
+			
+		}
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
 		
@@ -157,20 +166,30 @@ class Enemy extends FlxSprite
 	
 	private function chasePlayer():Void
 	{
-		moveToPosition(_lastSeenPlayer, true, function () { moveBack(); } , null, 2);
+		moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } , null);
 		switchState(CHASING);
 	}
 	
 	private function moveBack():Void
 	{
-		trace("Going back to " + _spawnPoint.toString());
+		if (canSwitchState(MOVING_BACK)) switchState(MOVING_BACK) else return;
 		_lastSeenPlayer = null;
-		switchState(MOVING_BACK);
-		moveToPosition(_spawnPoint, false, function () { angleFacing = _spawnAngle; });
+		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; switchState(1); } );
 	}
 	
-	private function moveToPosition(pos:FlxPoint, removeLastPoint:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
+	private function watch():Void
 	{
+		if (canSwitchState(WATCHING)) switchState(WATCHING) else return;
+		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
+	}
+	
+	private function moveToPosition(pos:FlxPoint, force:Bool = false, removeLastPoint:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
+	{
+		if (!force)
+		{
+			if (_path != null && !_path.finished) return;
+		}
+
 		_path = new FlxPath();
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
