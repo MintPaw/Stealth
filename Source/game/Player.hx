@@ -36,11 +36,6 @@ class Player extends FlxSprite
 		acceleration.set();
 	}
 
-	override public function kill():Void
-	{
-		
-	}
-
 	override public function getMidpoint(p:FlxPoint = null):FlxPoint
 	{
 		if (p == null) p = new FlxPoint();
