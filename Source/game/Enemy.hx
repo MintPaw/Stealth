@@ -77,10 +77,11 @@ class Enemy extends FlxSprite
 		_spawnPoint = getMidpoint();
 		
 		gun = new FlxSprite();
-		gun.makeGraphic(5, 20, 0xFF000000);
-		gun.origin.y -= gun.height / 2 - gun.width / 2;
+		gun.makeGraphic(20, 5, 0xFF000000);
+		gun.origin.x -= gun.width / 2 - gun.height / 2;
 		
 		buildStateMachineDocs();
+		FlxG.watch.add(this, "angleFacing");
 	}
 
 	public function seePlayer(p:Player):Void
@@ -117,7 +118,6 @@ class Enemy extends FlxSprite
 	private function switchState(s:Int):Void
 	{
 		_state = s;
-		FlxG.log.add("Switched to: " + s);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -175,10 +175,10 @@ class Enemy extends FlxSprite
 
 	private function updateAiming():Void
 	{
-		gun.x = x + width / 2 - gun.width / 4;
-		gun.y = y + height / 2 - gun.width / 4;
+		gun.x = x + width / 2 - gun.height / 4;
+		gun.y = y + height / 2 - gun.height / 4;
 
-		var difference:Float = (angleFacing - gun.angle) + 180;
+		var difference:Float = (angleFacing - gun.angle);
 		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
 
 		gun.angle += difference / 6;
@@ -233,7 +233,7 @@ class Enemy extends FlxSprite
 	
 	private function aimAtPlayerPosition():Void
 	{
-		angleFacing = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true) + 90;
+		angleFacing = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true); 
 	}
 	
 	private function shoot():Void
@@ -241,7 +241,7 @@ class Enemy extends FlxSprite
 		Sm.playEffect(Sm.ENEMY_SHOOT);
 		
 		var dir:Float = angleFacing + Reg.rnd.float( -spread, spread);
-		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir - 90]);
+		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir]);
 		spread += spreadIncreasePerShot;
 		
 		_framesTillNextShot = FlxMath.lerp(9, 45, FlxMath.distanceToPoint(this, _lastSeenPlayer) / 500);
