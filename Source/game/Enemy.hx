@@ -155,9 +155,11 @@ class Enemy extends FlxSprite
 
 		if (_state == MOVING_BACK)
 		{
-			if (_path.nodeIndex < _path.nodes.length - 1) 
+			FlxG.log.add("index " + _path.nodeIndex);
+			FlxG.log.add("length " + _path.nodes.length);
+			if (_path.nodeIndex < _path.nodes.length) 
 			{
-				angleFacing = FlxAngle.angleBetweenPoint(this, _path.nodes[_path.nodeIndex], true) + 90;
+				angleFacing = FlxAngle.angleBetweenPoint(this, _path.nodes[_path.nodeIndex], true);
 			}
 		}
 		
@@ -195,7 +197,7 @@ class Enemy extends FlxSprite
 	{
 		if (canSwitchState(MOVING_BACK)) switchState(MOVING_BACK) else return;
 		_lastSeenPlayer = null;
-		moveToPosition(_spawnPoint, false, false, function () { angleFacing = _spawnAngle; backIdle(); } );
+		moveToPosition(_spawnPoint, false, false, function () {backIdle(); } );
 	}
 	
 	private function watch():Void
@@ -206,6 +208,8 @@ class Enemy extends FlxSprite
 
 	private function backIdle():Void
 	{
+		switchState(IDLE);
+		angleFacing = _spawnAngle;
 		angleVision /= 5;
 	}
 	
