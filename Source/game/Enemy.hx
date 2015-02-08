@@ -155,7 +155,10 @@ class Enemy extends FlxSprite
 
 		if (_state == MOVING_BACK)
 		{
-			
+			if (_path.nodeIndex < _path.nodes.length - 1) 
+			{
+				angleFacing = FlxAngle.angleBetweenPoint(this, _path.nodes[_path.nodeIndex], true) + 90;
+			}
 		}
 		
 		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
