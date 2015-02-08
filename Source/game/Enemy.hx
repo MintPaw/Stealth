@@ -166,7 +166,7 @@ class Enemy extends FlxSprite
 	
 	private function chasePlayer():Void
 	{
-		moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } , null);
+		moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
 		switchState(CHASING);
 	}
 	
@@ -183,7 +183,7 @@ class Enemy extends FlxSprite
 		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
 	}
 	
-	private function moveToPosition(pos:FlxPoint, force:Bool = false, removeLastPoint:Bool = false, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, onCompleteDelay:Float = 0):Void
+	private function moveToPosition(pos:FlxPoint, force:Bool = false, removeLastPoint:Bool = false, onComplete:Function = null):Void
 	{
 		if (!force)
 		{
@@ -196,8 +196,7 @@ class Enemy extends FlxSprite
 		
 		if (onComplete != null)
 		{
-			if (onCompleteParams == null) onCompleteParams = [];
-			_path.onComplete = function (p:FlxPath) { new FlxTimer().start(onCompleteDelay, function (t:FlxTimer) { Reflect.callMethod(this, onComplete, onCompleteParams); } ); };
+			_path.onComplete = function (p:FlxPath) { Reflect.callMethod(this, onComplete, []); };
 		}
 		
 		_path.start(this, route, speed);
