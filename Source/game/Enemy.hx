@@ -65,7 +65,7 @@ class Enemy extends FlxSprite
 	{
 		super();
 
-		FlxG.watch.add(this, "angleFacing");
+		FlxG.watch.add(this, "_state");
 		
 		makeGraphic(20, 20, 0xFFFF00FF);
 		
@@ -188,7 +188,7 @@ class Enemy extends FlxSprite
 	
 	private function watch():Void
 	{
-		if (canSwitchState(WATCHING)) switchState(WATCHING) else return;
+		if (canSwitchState(WATCHING) && _path != null && _path.finished) switchState(WATCHING) else return;
 		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
 	}
 	
