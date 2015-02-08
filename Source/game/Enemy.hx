@@ -65,7 +65,7 @@ class Enemy extends FlxSprite
 	{
 		super();
 
-		FlxG.watch.add(this, "_state");
+		FlxG.watch.add(this, "angleFacing");
 		
 		makeGraphic(20, 20, 0xFFFF00FF);
 		
@@ -119,11 +119,7 @@ class Enemy extends FlxSprite
 	}
 	
 	override public function update(elapsed:Float):Void 
-	{
-		gun.x = x + width / 2 - gun.width / 4;
-		gun.y = y + height / 2 - gun.width / 4;
-		gun.angle = angleFacing + 180;
-		
+	{	
 		if (_state == SHOOTING)
 		{
 			if (_canSeePlayer)
@@ -162,6 +158,19 @@ class Enemy extends FlxSprite
 		}
 		
 		super.update(elapsed);
+
+		updateAiming();
+	}
+
+	private function updateAiming():Void
+	{
+		gun.x = x + width / 2 - gun.width / 4;
+		gun.y = y + height / 2 - gun.width / 4;
+
+		var difference:Float = (angleFacing - gun.angle) + 180;
+		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
+
+		gun.angle += difference / 6;
 	}
 	
 	private function chasePlayer():Void
@@ -204,10 +213,7 @@ class Enemy extends FlxSprite
 	
 	private function aimAtPlayerPosition():Void
 	{
-		var playerAngle:Float = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true);
-		var difference:Float = (playerAngle - angleFacing) + 90;
-		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
-		angleFacing += difference / 6;
+		angleFacing = FlxAngle.angleBetweenPoint(this, _lastSeenPlayer, true) + 90;
 	}
 	
 	private function shoot():Void
