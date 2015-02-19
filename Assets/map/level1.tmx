@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="40" tileheight="40">
  <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
-  <image source="../img/tileset.png" width="480" height="40"/>
+  <image source="../img/tileset.png" width="200" height="120"/>
  </tileset>
  <layer name="Meta" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFtARsA+2AUTAKRsEoGAWjAAoYB9oBgwgAADfMAAg=
+   eJxjYBgFtAa8VDSLFY3PSUWzR8HAAMaBdsAoGAWjgCqAa6AdMApIAgDoGAAn
   </data>
  </layer>
  <layer name="Collision" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYIAA5gHCMIDMxsanBRhO9hMTxqP2D1/7yQFDyX5qlzfk2E8pGEr2E9I7aj/17Scl7VLbfnqAwWA/OgYAAvcBrg==
+   eJxjYKAdYCYCU6ofn7nEmE+JPCF9w8l+UuKSmYAeetlPbTOppRaXO8mNb3LBYLOf3oCS8oXUuMclTy1/kGI/tcGo/bRRO5TsJyevDAYAANQHAe0=
   </data>
  </layer>
  <layer name="Visual" width="32" height="18" visible="0">
