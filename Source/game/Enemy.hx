@@ -86,13 +86,7 @@ class Enemy extends FlxSprite
 
 	public function seePlayer(p:Player):Void
 	{
-		if (canSwitchState(SHOOTING))
-		{
-			_player = p;
-			_canSeePlayer = true;
-			_lastSeenPlayer = _player.getMidpoint();
-			switchState(SHOOTING);
-		}
+		switchState(SHOOTING, p);
 	}
 	
 	public function losePlayer():Void
@@ -115,9 +109,18 @@ class Enemy extends FlxSprite
 		return _stateMachineDocs.get(_state).indexOf(s) >= 0;
 	}
 
-	private function switchState(s:Int):Void
+	private function switchState(s:Int, p:Player = null):Void
 	{
+		if (_stateMachineDocs.get(_state).indexOf(s) == -1) return;
+
 		_state = s;
+
+		if (s == SHOOTING)
+		{
+			_player = p;
+			_canSeePlayer = true;
+			_lastSeenPlayer = _player.getMidpoint();
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -223,7 +226,6 @@ class Enemy extends FlxSprite
 		if (_path != null) _path.cancel();
 
 		_path = new FlxPath();
-		new FlxTimer().start(2, function (t:FlxTimer) { moveBack(); } ); 
 		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
 		
