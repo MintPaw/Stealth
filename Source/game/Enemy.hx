@@ -127,6 +127,12 @@ class Enemy extends FlxSprite
 			moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
 			angleVision *= 5;
 		}
+
+		if (s == MOVING_BACK)
+		{
+			_lastSeenPlayer = null;
+			moveToPosition(_spawnPoint, false, false, function () { backIdle(); } );
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -159,7 +165,7 @@ class Enemy extends FlxSprite
 		if (_state == WATCHING)
 		{
 			_framesTillMoveBack--;
-			if (_framesTillMoveBack <= 0) moveBack();
+			if (_framesTillMoveBack <= 0) switchState(MOVING_BACK);
 		}
 
 		if (_state == MOVING_BACK)
@@ -193,13 +199,6 @@ class Enemy extends FlxSprite
 		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
 
 		gun.angle += difference / 6;
-	}
-	
-	private function moveBack():Void
-	{
-		if (canSwitchState(MOVING_BACK)) switchState(MOVING_BACK) else return;
-		_lastSeenPlayer = null;
-		moveToPosition(_spawnPoint, false, false, function () {backIdle(); } );
 	}
 	
 	private function watch():Void
