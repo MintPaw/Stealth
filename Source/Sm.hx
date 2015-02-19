@@ -8,7 +8,8 @@ import openfl.media.SoundChannel;
  */
 class Sm
 {
-	public static inline var ENEMY_SHOOT:String = "Assets/sound/enemyShoot.wav";
+	public static inline var ENEMY_SHOOT:String =
+                                "Assets/sound/enemyShoot.wav";
 	
 	private static var _effectChannel:SoundChannel;
 	

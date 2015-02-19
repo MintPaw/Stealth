@@ -97,11 +97,26 @@ class Enemy extends FlxSprite
 	private function buildStateMachineDocs():Void
 	{
 		_stateMachineDocs = new Map();
-		_stateMachineDocs.set(IDLE, [SHOOTING, RESPOND_TO_CALL]);
-		_stateMachineDocs.set(SHOOTING, [CHASING]);
-		_stateMachineDocs.set(CHASING, [SHOOTING, WATCHING]);
-		_stateMachineDocs.set(WATCHING, [SHOOTING, RESPOND_TO_CALL, MOVING_BACK]);
-		_stateMachineDocs.set(MOVING_BACK, [IDLE, SHOOTING, RESPOND_TO_CALL]);
+
+		_stateMachineDocs.set(
+            IDLE,
+            [SHOOTING, RESPOND_TO_CALL]);
+
+		_stateMachineDocs.set(
+            SHOOTING,
+            [CHASING]);
+
+		_stateMachineDocs.set(
+            CHASING,
+            [SHOOTING, WATCHING]);
+
+		_stateMachineDocs.set(
+            WATCHING,
+            [SHOOTING, RESPOND_TO_CALL, MOVING_BACK]);
+
+		_stateMachineDocs.set(
+            MOVING_BACK,
+            [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
 	
 	private function canSwitchState(s:Int):Bool
@@ -124,14 +139,25 @@ class Enemy extends FlxSprite
 
 		if (s == CHASING)
 		{
-			moveToPosition(_lastSeenPlayer, true, true, switchState, [WATCHING]);
+			moveToPosition(
+                _lastSeenPlayer,
+                true,
+                true,
+                switchState,
+                [WATCHING]);
+
 			angleVision *= 5;
 		}
 
 		if (s == MOVING_BACK)
 		{
 			_lastSeenPlayer = null;
-			moveToPosition(_spawnPoint, false, false, switchState, [IDLE] );
+			moveToPosition(
+                _spawnPoint,
+                false,
+                false,
+                switchState,
+                [IDLE]);
 		}
 
 		if (s == IDLE)
@@ -185,11 +211,13 @@ class Enemy extends FlxSprite
 			FlxG.log.add("length " + _path.nodes.length);
 			if (_path.nodeIndex < _path.nodes.length) 
 			{
-				angleFacing = FlxAngle.angleBetweenPoint(this, _path.nodes[_path.nodeIndex], true);
+				angleFacing = FlxAngle.angleBetweenPoint(this,
+                                _path.nodes[_path.nodeIndex], true);
 			}
 		}
 		
-		spread = Math.min(Math.max(spread - spreadDecreasePerFrame, spreadMinimum), 40);
+		spread = Math.min(Math.max(spread - spreadDecreasePerFrame
+                    , spreadMinimum), 40);
 		
 		if (_player != null)
 		{
@@ -207,7 +235,10 @@ class Enemy extends FlxSprite
 		gun.y = y + height / 2 - gun.height / 4;
 
 		var difference:Float = (angleFacing - gun.angle);
-		if (difference > 180) difference -= 360 else if (difference < -180) difference += 360;
+		if (difference > 180)
+            difference -= 360;
+        else if (difference < -180)
+            difference += 360;
 
 		gun.angle += difference / 6;
 	}
@@ -227,13 +258,15 @@ class Enemy extends FlxSprite
 		if (_path != null) _path.cancel();
 
 		_path = new FlxPath();
-		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
+		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback,
+                                        [getMidpoint(), pos]);
 		if (removeLastPoint) route.pop();
 		
 		if (onComplete != null)
 		{
 			if (onCompleteParams == null) onCompleteParams = [];
-			_path.onComplete = function (p:FlxPath) { Reflect.callMethod(this, onComplete, onCompleteParams); };
+			_path.onComplete = function (p:FlxPath) {
+			Reflect.callMethod(this, onComplete, onCompleteParams); };
 		}
 		
 		_path.start(this, route, speed);
@@ -252,7 +285,8 @@ class Enemy extends FlxSprite
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir]);
 		spread += spreadIncreasePerShot;
 		
-		_framesTillNextShot = FlxMath.lerp(9, 45, FlxMath.distanceToPoint(this, _lastSeenPlayer) / 500);
+		_framesTillNextShot = FlxMath.lerp(9, 45, FlxMath.distanceToPoint(this,
+                                                    _lastSeenPlayer) / 500);
 		_framesTillNextShot *= Reg.rnd.float(0.8, 1.2);
 	}
 	

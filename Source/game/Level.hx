@@ -38,9 +38,12 @@ class Level
 		for (i in 0...metaLayer.tileArray.length) 
 		{
 			if (metaLayer.tileArray[i] == META_SPAWN)
-				spawnPoint = new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight, Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
+				spawnPoint =
+                    new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight,
+                        Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
 			
-			if (metaLayer.tileArray[i] >= META_ENEMY_START && metaLayer.tileArray[i] <= META_ENEMY_END)
+			if (metaLayer.tileArray[i] >= META_ENEMY_START &&
+                    metaLayer.tileArray[i] <= META_ENEMY_END)
 			{
 				var angle:Float = (metaLayer.tileArray[i] - 5) * 45;
 				

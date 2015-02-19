@@ -62,10 +62,14 @@ class GameState extends FlxState
 	
 	private function setupBinds():Void
 	{
-		FlxMintInput.bindToFunction("w", _players.members[0], "move", [FlxObject.UP], FlxMintInput.DOWN);
-		FlxMintInput.bindToFunction("s", _players.members[0], "move", [FlxObject.DOWN], FlxMintInput.DOWN);
-		FlxMintInput.bindToFunction("a", _players.members[0], "move", [FlxObject.LEFT], FlxMintInput.DOWN);
-		FlxMintInput.bindToFunction("d", _players.members[0], "move", [FlxObject.RIGHT], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("w", _players.members[0], "move",
+            [FlxObject.UP], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("s", _players.members[0], "move",
+            [FlxObject.DOWN], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("a", _players.members[0], "move",
+            [FlxObject.LEFT], FlxMintInput.DOWN);
+		FlxMintInput.bindToFunction("d", _players.members[0], "move",
+            [FlxObject.RIGHT], FlxMintInput.DOWN);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -91,7 +95,8 @@ class GameState extends FlxState
 				var lowerAngle:Float = i.angleFacing - i.angleVision;
 				var upperAngle:Float = i.angleFacing + i.angleVision;
 
-				if (_level.collisionLayer.ray(i.getMidpoint(), j.getMidpoint()))
+				if (_level.collisionLayer.ray(i.getMidpoint()
+                                             , j.getMidpoint()))
 				{
 					if (ang > lowerAngle && ang < upperAngle)
 					{
@@ -119,7 +124,8 @@ class GameState extends FlxState
 		var hit:Bool = false;
 		for (i in _players)
 		{
-			if (Reg.lineIntersectsRect(loc, result, new FlxRect(i.x, i.y, i.width, i.height)))
+			if (Reg.lineIntersectsRect(loc, result,
+                    new FlxRect(i.x, i.y, i.width, i.height)))
 			{
 				i.hurt(1);
 				hit = true;
