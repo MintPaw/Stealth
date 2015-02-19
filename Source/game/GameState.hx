@@ -8,15 +8,17 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.text.FlxText;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
 {	
 	private var _level:Level;
-	
 	private var _players:FlxTypedGroup<Player>;
 	private var _enemies:FlxTypedGroup<Enemy>;
-	
+
+    private var _gameOver:Bool = false;
+
 	public function new()
 	{
 		super();
@@ -32,10 +34,10 @@ class GameState extends FlxState
 	private function setupMap():Void
 	{
 		_level = new Level("Assets/map/level0.tmx");
-		
+
 		add(_level.collisionLayer);
 		add(_level.visualLayer);
-		
+
 		_enemies = new FlxTypedGroup<Enemy>();
 		for (i in _level.enemies)
 		{
@@ -74,8 +76,11 @@ class GameState extends FlxState
 	
 	override public function update(elapsed:Float):Void 
 	{
-		updateCollisions();
-		updateEnemies();
+        updateCollisions();
+        updateEnemies();
+        updatePlayers();
+
+        if (FlxG.keys.justPressed.R) FlxG.resetState();
 		
 		super.update(elapsed);
 	}
@@ -91,6 +96,12 @@ class GameState extends FlxState
 		{
 			for (j in _players)
 			{
+                if (!j.alive)
+                {
+                    if (i.canSeePlayer) i.playerDead();
+                    continue;
+                }
+
 				var ang:Float = FlxAngle.angleBetween(i, j, true);
 				var lowerAngle:Float = i.angleFacing - i.angleVision;
 				var upperAngle:Float = i.angleFacing + i.angleVision;
@@ -108,7 +119,28 @@ class GameState extends FlxState
 			}
 		}
 	}
-	
+
+    function updatePlayers():Void
+    {
+        _gameOver = true;
+
+        for (p in _players)
+        {
+            if (p.alive) _gameOver = false;
+        }
+
+        if (_gameOver)
+        {
+           var ggText:FlxText = new FlxText(0, 0, 200
+                                        , "Press [R] to restart", 12);
+           ggText.alignment = "center";
+           ggText.color = 0xFFFF0000;
+           ggText.x = FlxG.width / 2 - ggText.width / 2;
+           ggText.y = FlxG.height / 2 - ggText.height / 2;
+           add(ggText);
+        }
+    }
+
 	private function shoot(loc:FlxPoint, dir:Float):Void
 	{
 		var result:FlxPoint = new FlxPoint();
@@ -144,4 +176,9 @@ class GameState extends FlxState
 	{
 		return _level.collisionLayer.findPath(start, end);
 	}
+
+   override public function destroy():Void
+   {
+		FlxMintInput.unbindAll();
+   }
 }

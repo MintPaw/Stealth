@@ -39,6 +39,7 @@ class Enemy extends FlxSprite
 	public var angleVision:Float = 15;
 	public var timeTillLoseVisionMax:Float = .5;
 	public var timeTillLoseVision:Float;
+	public var canSeePlayer:Bool = false;
 	
 	// Spread vars
 	public var spreadMinimum:Float = 5;
@@ -53,7 +54,6 @@ class Enemy extends FlxSprite
 	// Player vars
 	private var _player:Player;
 	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
-	private var _canSeePlayer:Bool = false;
 	
 	// Misc
 	private var _framesTillNextShot:Float = 0;
@@ -91,8 +91,16 @@ class Enemy extends FlxSprite
 	
 	public function losePlayer():Void
 	{
-		_canSeePlayer = false;
+		canSeePlayer = false;
 	}
+
+    public function playerDead():Void
+    {
+        if (_state == SHOOTING)
+        {
+            switchState(CHASING);
+        }
+    }
 
 	private function buildStateMachineDocs():Void
 	{
@@ -128,7 +136,7 @@ class Enemy extends FlxSprite
 		if (s == SHOOTING)
 		{
 			_player = p;
-			_canSeePlayer = true;
+			canSeePlayer = true;
 			_lastSeenPlayer = _player.getMidpoint();
 		}
 
@@ -171,7 +179,7 @@ class Enemy extends FlxSprite
 	{	
 		if (_state == SHOOTING)
 		{
-			if (_canSeePlayer)
+			if (canSeePlayer)
 			{
 				timeTillLoseVision = timeTillLoseVisionMax;
 				aimAtPlayerPosition();
@@ -184,7 +192,7 @@ class Enemy extends FlxSprite
 					switchState(CHASING);
 				}
 			}
-			
+
 			_framesTillNextShot -= 1;
 			if (_framesTillNextShot <= 0) shoot();	
 		}

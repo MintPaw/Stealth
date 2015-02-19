@@ -13,6 +13,7 @@ class Level
 	public static inline var META_SPAWN:Int = 1;
 	public static inline var META_ENEMY_START:Int = 5;
 	public static inline var META_ENEMY_END:Int = 12;
+    public static inline var META_END:Int = 13;
 	
 	public var collisionLayer:FlxTilemap;
 	public var visualLayer:FlxTilemap;
