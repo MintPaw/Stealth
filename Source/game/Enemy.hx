@@ -124,7 +124,7 @@ class Enemy extends FlxSprite
 
 		if (s == CHASING)
 		{
-			moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
+			moveToPosition(_lastSeenPlayer, true, true, switchState, [WATCHING]);
 			angleVision *= 5;
 		}
 
@@ -138,6 +138,11 @@ class Enemy extends FlxSprite
 		{
 			angleFacing = _spawnAngle;
 			angleVision /= 5;
+		}
+
+		if (s == WATCHING)
+		{
+			_framesTillMoveBack = 120;
 		}
 	}
 	
@@ -207,12 +212,6 @@ class Enemy extends FlxSprite
 		gun.angle += difference / 6;
 	}
 	
-	private function watch():Void
-	{
-		if (canSwitchState(WATCHING) && _path != null && _path.finished) switchState(WATCHING) else return;
-		_framesTillMoveBack = 120;
-	}
-
 	private function moveToPosition(
 		pos:FlxPoint,
 		force:Bool = false,
