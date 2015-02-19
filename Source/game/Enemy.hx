@@ -119,11 +119,6 @@ class Enemy extends FlxSprite
             [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
 	
-	private function canSwitchState(s:Int):Bool
-	{
-		return _stateMachineDocs.get(_state).indexOf(s) >= 0;
-	}
-
 	private function switchState(s:Int, p:Player = null):Void
 	{
 		if (_stateMachineDocs.get(_state).indexOf(s) == -1) return;
