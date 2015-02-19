@@ -131,7 +131,13 @@ class Enemy extends FlxSprite
 		if (s == MOVING_BACK)
 		{
 			_lastSeenPlayer = null;
-			moveToPosition(_spawnPoint, false, false, function () { backIdle(); } );
+			moveToPosition(_spawnPoint, false, false, switchState, [IDLE] );
+		}
+
+		if (s == IDLE)
+		{
+			angleFacing = _spawnAngle;
+			angleVision /= 5;
 		}
 	}
 	
@@ -207,13 +213,6 @@ class Enemy extends FlxSprite
 		_framesTillMoveBack = 120;
 	}
 
-	private function backIdle():Void
-	{
-		switchState(IDLE);
-		angleFacing = _spawnAngle;
-		angleVision /= 5;
-	}
-	
 	private function moveToPosition(
 		pos:FlxPoint,
 		force:Bool = false,
