@@ -10,6 +10,7 @@ import flixel.math.FlxRect;
 class Reg
 {
 	public static var rnd:FlxRandom = new FlxRandom();
+    public static var levelNumber:Int = 0;
 	
 	public function new() 
 	{

@@ -19,6 +19,7 @@ class Level
 	public var visualLayer:FlxTilemap;
 	
 	public var spawnPoint:FlxPoint;
+	public var endPoint:FlxPoint;
 	public var enemies:Array<Enemy> = [];
 	
 	private var _tiledMap:TiledMap;
@@ -54,6 +55,11 @@ class Level
 					angle);
 				enemies.push(e);
 			}
+
+			if (metaLayer.tileArray[i] == META_END)
+				endPoint =
+                    new FlxPoint(i % metaLayer.width * _tiledMap.tileHeight,
+                        Std.int(i / metaLayer.width) * _tiledMap.tileWidth);
 		}
 		
 	}

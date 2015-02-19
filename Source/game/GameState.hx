@@ -16,8 +16,10 @@ class GameState extends FlxState
 	private var _level:Level;
 	private var _players:FlxTypedGroup<Player>;
 	private var _enemies:FlxTypedGroup<Enemy>;
+    private var _endPoint:FlxSprite;
 
-    private var _gameOver:Bool = false;
+    private var _gameLost:Bool = false;
+    private var _gameWon:Bool = false;
 
 	public function new()
 	{
@@ -33,10 +35,16 @@ class GameState extends FlxState
 	
 	private function setupMap():Void
 	{
-		_level = new Level("Assets/map/level0.tmx");
+		_level = new Level("Assets/map/level" + Reg.levelNumber + ".tmx");
 
 		add(_level.collisionLayer);
 		add(_level.visualLayer);
+
+        _endPoint = new FlxSprite();
+        _endPoint.makeGraphic(20, 20, 0xFF2222FF);
+        _endPoint.x = _level.endPoint.x + _endPoint.width / 2;
+        _endPoint.y = _level.endPoint.y + _endPoint.height / 2;
+        add(_endPoint);
 
 		_enemies = new FlxTypedGroup<Enemy>();
 		for (i in _level.enemies)
@@ -122,14 +130,20 @@ class GameState extends FlxState
 
     function updatePlayers():Void
     {
-        _gameOver = true;
+        _gameLost = true;
+        _gameWon = true;
 
         for (p in _players)
         {
-            if (p.alive) _gameOver = false;
+            if (p.alive)
+            {
+                _gameLost = false;
+
+                if (!FlxG.overlap(p, _endPoint)) _gameWon = false;
+            }
         }
 
-        if (_gameOver)
+        if (_gameLost)
         {
            var ggText:FlxText = new FlxText(0, 0, 200
                                         , "Press [R] to restart", 12);
@@ -138,6 +152,9 @@ class GameState extends FlxState
            ggText.x = FlxG.width / 2 - ggText.width / 2;
            ggText.y = FlxG.height / 2 - ggText.height / 2;
            add(ggText);
+        } else if (_gameWon) {
+            Reg.levelNumber++;
+            FlxG.resetState();
         }
     }
 
