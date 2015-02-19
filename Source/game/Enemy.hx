@@ -121,6 +121,12 @@ class Enemy extends FlxSprite
 			_canSeePlayer = true;
 			_lastSeenPlayer = _player.getMidpoint();
 		}
+
+		if (s == CHASING)
+		{
+			moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
+			angleVision *= 5;
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -137,7 +143,7 @@ class Enemy extends FlxSprite
 				{
 					_player = null;
 					
-					chasePlayer();
+					switchState(CHASING);
 				}
 			}
 			
@@ -189,13 +195,6 @@ class Enemy extends FlxSprite
 		gun.angle += difference / 6;
 	}
 	
-	private function chasePlayer():Void
-	{
-		moveToPosition(_lastSeenPlayer, true, true, function () { watch(); } );
-		angleVision *= 5;
-		switchState(CHASING);
-	}
-	
 	private function moveBack():Void
 	{
 		if (canSwitchState(MOVING_BACK)) switchState(MOVING_BACK) else return;
@@ -216,7 +215,12 @@ class Enemy extends FlxSprite
 		angleVision /= 5;
 	}
 	
-	private function moveToPosition(pos:FlxPoint, force:Bool = false, removeLastPoint:Bool = false, onComplete:Function = null):Void
+	private function moveToPosition(
+		pos:FlxPoint,
+		force:Bool = false,
+		removeLastPoint:Bool = false,
+		onComplete:Function = null,
+		onCompleteParams:Array<Dynamic> = null):Void
 	{
 		if (!force)
 		{
@@ -231,7 +235,8 @@ class Enemy extends FlxSprite
 		
 		if (onComplete != null)
 		{
-			_path.onComplete = function (p:FlxPath) { Reflect.callMethod(this, onComplete, []); };
+			if (onCompleteParams == null) onCompleteParams = [];
+			_path.onComplete = function (p:FlxPath) { Reflect.callMethod(this, onComplete, onCompleteParams); };
 		}
 		
 		_path.start(this, route, speed);
