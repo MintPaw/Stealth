@@ -215,9 +215,7 @@ class Enemy extends FlxSprite
                     , spreadMinimum), 40);
 		
 		if (_player != null)
-		{
 			_player.getMidpoint(_lastSeenPlayer);
-		}
 		
 		super.update(elapsed);
 
@@ -246,22 +244,21 @@ class Enemy extends FlxSprite
 		onCompleteParams:Array<Dynamic> = null):Void
 	{
 		if (!force)
-		{
 			if (_path != null && !_path.finished) return;
-		}
 
 		if (_path != null) _path.cancel();
 
 		_path = new FlxPath();
-		var route:Array<FlxPoint> = Reflect.callMethod(this, getRouteCallback,
-                                        [getMidpoint(), pos]);
+		var route:Array<FlxPoint> =
+            Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
+
 		if (removeLastPoint) route.pop();
 		
 		if (onComplete != null)
 		{
 			if (onCompleteParams == null) onCompleteParams = [];
 			_path.onComplete = function (p:FlxPath) {
-			Reflect.callMethod(this, onComplete, onCompleteParams); };
+    			Reflect.callMethod(this, onComplete, onCompleteParams); };
 		}
 		
 		_path.start(this, route, speed);
