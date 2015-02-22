@@ -133,7 +133,7 @@ class Enemy extends FlxSprite
 
 		_stateMachineDocs.set(
             MOVING_BACK,
-            [IDLE, SHOOTING, RESPOND_TO_CALL]);
+            [IDLE, SHOOTING, HEARING, RESPOND_TO_CALL]);
 	}
 	
 	private function switchState(s:String, p:Player = null):Void
