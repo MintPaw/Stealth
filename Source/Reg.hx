@@ -16,7 +16,7 @@ class Reg
 	{
 		
 	}
-	
+
 	public static function lineIntersectsRect(p1:FlxPoint, p2:FlxPoint,
                                 r:FlxRect):Bool
 	{

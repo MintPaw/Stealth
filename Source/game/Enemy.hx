@@ -55,7 +55,7 @@ class Enemy extends FlxSprite
 	
 	// Player vars
 	private var _player:Player;
-	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
+	private var _lastSeenPlayer:FlxPoint;
 	
 	// Misc
 	private var _framesTillDoneHearing:Float = 0;
@@ -117,7 +117,7 @@ class Enemy extends FlxSprite
 
 		_stateMachineDocs.set(
             HEARING,
-            [CHASING]);
+            [HEARING, CHASING]);
 
 		_stateMachineDocs.set(
             SHOOTING,
@@ -140,6 +140,7 @@ class Enemy extends FlxSprite
 	{
 		if (_stateMachineDocs.get(_state).indexOf(s) == -1) return;
 
+        var oldState:String = _state;
 		_state = s;
 
 		if (s == SHOOTING)
@@ -151,8 +152,10 @@ class Enemy extends FlxSprite
         
         if (s == HEARING)
         {
-            _lastSeenPlayer = p.getMidpoint();
-            _framesTillDoneHearing = 100;
+            if (_lastSeenPlayer == null || Reg.rnd.int(0, 30) == 0)
+                    _lastSeenPlayer = p.getMidpoint();
+
+            if (oldState != HEARING) _framesTillDoneHearing = 100;
         }
 
 		if (s == CHASING)
@@ -191,7 +194,7 @@ class Enemy extends FlxSprite
 	}
 	
 	override public function update(elapsed:Float):Void 
-	{	
+	{
 		if (_state == SHOOTING)
 		{
 			if (canSeePlayer)
@@ -284,6 +287,8 @@ class Enemy extends FlxSprite
 		_path = new FlxPath();
 		var route:Array<FlxPoint> =
             Reflect.callMethod(this, getRouteCallback, [getMidpoint(), pos]);
+
+        if (route == null) return;
 
 		if (removeLastPoint) route.pop();
 		
