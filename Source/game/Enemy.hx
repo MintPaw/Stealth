@@ -17,12 +17,13 @@ import haxe.Constraints.Function;
 class Enemy extends FlxSprite
 {
 	// FSM consts
-	public static var IDLE:Int = 1;
-	public static var SHOOTING:Int = 2;
-	public static var WATCHING:Int = 3;
-	public static var CHASING:Int = 4;
-	public static var MOVING_BACK:Int = 5;
-	public static var RESPOND_TO_CALL:Int = 6;
+	public static var IDLE:String = "idle";
+	public static var SHOOTING:String = "shooting";
+	public static var HEARING:String = "hearing";
+	public static var WATCHING:String = "watching";
+	public static var CHASING:String = "chasing";
+	public static var MOVING_BACK:String = "moving back";
+	public static var RESPOND_TO_CALL:String = "responding";
 	
 	// Callbacks
 	public var shootCallback:Function;
@@ -49,14 +50,15 @@ class Enemy extends FlxSprite
 	public var spreadDecreasePerFrame:Float = .2;
 	
 	// FSM vars
-	private var _state:Int = IDLE;
-	private var _stateMachineDocs:Map<Int, Array<Int>>;
+	private var _state:String = IDLE;
+	private var _stateMachineDocs:Map<String, Array<String>>;
 	
 	// Player vars
 	private var _player:Player;
 	private var _lastSeenPlayer:FlxPoint = new FlxPoint();
 	
 	// Misc
+	private var _framesTillDoneHearing:Float = 0;
 	private var _framesTillNextShot:Float = 0;
 	private var _framesTillMoveBack:Float = 0;
 	private var _spawnPoint:FlxPoint;
@@ -92,7 +94,7 @@ class Enemy extends FlxSprite
 
     public function hearPlayer(p:Player):Void
     {
-        
+        switchState(HEARING, p);
     }
 	
 	public function losePlayer():Void
@@ -114,7 +116,11 @@ class Enemy extends FlxSprite
 
 		_stateMachineDocs.set(
             IDLE,
-            [SHOOTING, RESPOND_TO_CALL]);
+            [SHOOTING, HEARING, RESPOND_TO_CALL]);
+
+		_stateMachineDocs.set(
+            HEARING,
+            [CHASING]);
 
 		_stateMachineDocs.set(
             SHOOTING,
@@ -133,7 +139,7 @@ class Enemy extends FlxSprite
             [IDLE, SHOOTING, RESPOND_TO_CALL]);
 	}
 	
-	private function switchState(s:Int, p:Player = null):Void
+	private function switchState(s:String, p:Player = null):Void
 	{
 		if (_stateMachineDocs.get(_state).indexOf(s) == -1) return;
 
@@ -145,6 +151,12 @@ class Enemy extends FlxSprite
 			canSeePlayer = true;
 			_lastSeenPlayer = _player.getMidpoint();
 		}
+        
+        if (s == HEARING)
+        {
+            _lastSeenPlayer = p.getMidpoint();
+            _framesTillDoneHearing = 100;
+        }
 
 		if (s == CHASING)
 		{
@@ -202,6 +214,16 @@ class Enemy extends FlxSprite
 			_framesTillNextShot -= 1;
 			if (_framesTillNextShot <= 0) shoot();	
 		}
+
+        if (_state == HEARING)
+        {
+            _framesTillDoneHearing--;
+            aimAtPlayerPosition();
+            if (_framesTillDoneHearing <= 0)
+            {
+                switchState(CHASING);
+            }
+        }
 		
 		if (_state == CHASING)
 		{
