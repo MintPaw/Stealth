@@ -1,7 +1,7 @@
 How to build (on Windows):
 - First install git(git-scm.com) and haxe(haxe.org)
 - Clone this repo
-- Run Stealth/Extra/setup.bat to install the libraries required to compile
+- Run Stealth/Extra/winbuild/setup.bat to install the libraries required to compile
 - Naviage a command line instance into the Stealth directory
 - To build the flash version type "openfl build flash", optionally append " -debug" to create a debug version
 - Builds will be created in Stealth/Export/flash/bin
