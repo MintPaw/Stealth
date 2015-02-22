@@ -9,6 +9,7 @@ import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.text.FlxText;
+import flixel.math.FlxMath;
 import flxMintInput.FlxMintInput;
 
 class GameState extends FlxState
@@ -116,7 +117,7 @@ class GameState extends FlxState
 
 				if (_level.collisionLayer.ray(i.getMidpoint()
                                              , j.getMidpoint()))
-				{
+                    {
 					if (ang > lowerAngle && ang < upperAngle)
 					{
 						i.seePlayer(j);
@@ -124,6 +125,11 @@ class GameState extends FlxState
 				} else {
 					i.losePlayer();
 				}
+
+                if (FlxMath.distanceBetween(i, j) < i.hearingRange && j.moving)
+                {
+                    i.hearPlayer(j);
+                }
 			}
 		}
 	}

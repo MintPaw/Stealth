@@ -10,6 +10,8 @@ import flixel.math.FlxPoint;
  */
 class Player extends FlxSprite
 {
+    public var moving:Bool = false;
+
 	public function new() 
 	{
 		super();

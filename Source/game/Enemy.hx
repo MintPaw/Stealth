@@ -33,6 +33,7 @@ class Enemy extends FlxSprite
 	
 	// Misc public
 	public var speed:Float = 100;
+    public var hearingRange:Float = 300;
 	
 	// Vision vars
 	public var angleFacing:Float = 0;
@@ -88,6 +89,11 @@ class Enemy extends FlxSprite
 	{
 		switchState(SHOOTING, p);
 	}
+
+    public function hearPlayer(p:Player):Void
+    {
+        
+    }
 	
 	public function losePlayer():Void
 	{
