@@ -238,8 +238,6 @@ class Enemy extends FlxSprite
 
 		if (_state == MOVING_BACK)
 		{
-			FlxG.log.add("index " + _path.nodeIndex);
-			FlxG.log.add("length " + _path.nodes.length);
 			if (_path.nodeIndex < _path.nodes.length) 
 			{
 				angleFacing = FlxAngle.angleBetweenPoint(this,
