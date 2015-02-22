@@ -19,7 +19,7 @@ class MainState extends FlxState
 	override public function create():Void 
 	{
 		super.create();
-		
+		FlxG.log.redirectTraces = true;
 		FlxG.cameras.bgColor = 0xFFFFFFFF;
 		
 		FlxG.switchState(new GameState());

@@ -69,8 +69,6 @@ class Enemy extends FlxSprite
 	{
 		super();
 
-		FlxG.watch.add(this, "_state");
-		
 		makeGraphic(20, 20, 0xFFFF00FF);
 		
 		x = xpos + width / 2;
@@ -84,7 +82,6 @@ class Enemy extends FlxSprite
 		gun.origin.x -= gun.width / 2 - gun.height / 2;
 		
 		buildStateMachineDocs();
-		FlxG.watch.add(this, "angleFacing");
 	}
 
 	public function seePlayer(p:Player):Void
