@@ -36,7 +36,7 @@ class GameState extends FlxState
 	
 	private function setupMap():Void
 	{
-        Reg.levelNumber = 2; //NOTE: For debug
+        Reg.levelNumber = 1;
 		_level = new Level("Assets/map/level" + Reg.levelNumber + ".tmx");
 
 		add(_level.collisionLayer);
@@ -115,6 +115,7 @@ class GameState extends FlxState
 				var ang:Float = FlxAngle.angleBetween(i, j, true);
 				var lowerAngle:Float = i.angleFacing - i.angleVision;
 				var upperAngle:Float = i.angleFacing + i.angleVision;
+
 
 				if (_level.collisionLayer.ray(i.getMidpoint()
                                              , j.getMidpoint()))

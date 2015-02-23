@@ -33,12 +33,12 @@ class Enemy extends FlxSprite
 	public var gun:FlxSprite;
 	
 	// Misc public
-	public var speed:Float = 100;
+	public var speed:Float = 150;
     public var hearingRange:Float = 300;
 	
 	// Vision vars
 	public var angleFacing:Float = 0;
-	public var angleVision:Float = 15;
+	public var angleVision:Float = 30;
 	public var timeTillLoseVisionMax:Float = .5;
 	public var timeTillLoseVision:Float;
 	public var canSeePlayer:Bool = false;
@@ -46,8 +46,8 @@ class Enemy extends FlxSprite
 	// Spread vars
 	public var spreadMinimum:Float = 2;
 	public var spread:Float = 0;
-	public var spreadIncreasePerShot:Float = 5;
-	public var spreadDecreasePerFrame:Float = .35;
+	public var spreadIncreasePerShot:Float = 4;
+	public var spreadDecreasePerFrame:Float = .3;
 	
 	// FSM vars
 	private var _state:String = IDLE;
@@ -149,6 +149,12 @@ class Enemy extends FlxSprite
 			canSeePlayer = true;
             _framesTillNextShot = 10;
 			_lastSeenPlayer = _player.getMidpoint();
+
+            if (_path != null && !_path.finished)
+            {
+                _path.cancel();
+                _framesTillNextShot += 20;
+            }
 		}
         
         if (s == HEARING)
@@ -314,7 +320,7 @@ class Enemy extends FlxSprite
 		Reflect.callMethod(this, shootCallback, [getMidpoint(), dir]);
 		spread += spreadIncreasePerShot;
 		
-		_framesTillNextShot = FlxMath.lerp(9, 45, FlxMath.distanceToPoint(this,
+		_framesTillNextShot = FlxMath.lerp(9, 30, FlxMath.distanceToPoint(this,
                                                     _lastSeenPlayer) / 500);
 		_framesTillNextShot *= Reg.rnd.float(0.8, 1.2);
 	}

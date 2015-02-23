@@ -18,7 +18,7 @@ class Player extends FlxSprite
 		
 		health = 2;
 		
-		maxVelocity.set(400, 400);
+		maxVelocity.set(300, 300);
 		drag.set(4000, 4000);
 		makeGraphic(20, 20, 0xFF0000FF);
 	}

@@ -5,12 +5,12 @@
  </tileset>
  <layer name="Meta" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFyICXyuaxUdm8UTAKRsEoGAWjgFzAONAOGEQAAJ78ABU=
+   eJxjYBgFyIB3oB0wCkY0YBxoB4yCUTAKRsEIAQB1oAAP
   </data>
  </layer>
  <layer name="Collision" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYIAA5gHCMIDMxsanBRhO9hMTxqP2D1/7yQFDyX5qlzfk2E8pGEr2E9I7aj/17Scl7VLbfnqAwWA/OgYAAvcBrg==
+   eJxjYIAA5gHCMIDMphcYtR+VTWkcDnX7ydE/av+o/aP2j0z7KQWj9qOyBwIDAMwpAZk=
   </data>
  </layer>
  <layer name="Visual" width="32" height="18" visible="0">
