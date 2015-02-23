@@ -44,10 +44,10 @@ class Enemy extends FlxSprite
 	public var canSeePlayer:Bool = false;
 	
 	// Spread vars
-	public var spreadMinimum:Float = 5;
+	public var spreadMinimum:Float = 2;
 	public var spread:Float = 0;
 	public var spreadIncreasePerShot:Float = 5;
-	public var spreadDecreasePerFrame:Float = .2;
+	public var spreadDecreasePerFrame:Float = .35;
 	
 	// FSM vars
 	private var _state:String = IDLE;
@@ -117,7 +117,7 @@ class Enemy extends FlxSprite
 
 		_stateMachineDocs.set(
             HEARING,
-            [HEARING, CHASING]);
+            [HEARING, CHASING, SHOOTING]);
 
 		_stateMachineDocs.set(
             SHOOTING,
@@ -147,6 +147,7 @@ class Enemy extends FlxSprite
 		{
 			_player = p;
 			canSeePlayer = true;
+            _framesTillNextShot = 10;
 			_lastSeenPlayer = _player.getMidpoint();
 		}
         

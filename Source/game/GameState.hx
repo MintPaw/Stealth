@@ -36,7 +36,7 @@ class GameState extends FlxState
 	
 	private function setupMap():Void
 	{
-        Reg.levelNumber = 1; //NOTE: For debug
+        Reg.levelNumber = 2; //NOTE: For debug
 		_level = new Level("Assets/map/level" + Reg.levelNumber + ".tmx");
 
 		add(_level.collisionLayer);
