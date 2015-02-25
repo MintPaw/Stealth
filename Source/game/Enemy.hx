@@ -34,7 +34,7 @@ class Enemy extends FlxSprite
 	
 	// Misc public
 	public var speed:Float = 150;
-    public var hearingRange:Float = 300;
+        public var hearingRange:Float = 300;
 	
 	// Vision vars
 	public var angleFacing:Float = 0;
@@ -140,14 +140,14 @@ class Enemy extends FlxSprite
 	{
 		if (_stateMachineDocs.get(_state).indexOf(s) == -1) return;
 
-        var oldState:String = _state;
+                var oldState:String = _state;
 		_state = s;
 
 		if (s == SHOOTING)
 		{
 			_player = p;
 			canSeePlayer = true;
-            _framesTillNextShot = 10;
+                        _framesTillNextShot = 10;
 			_lastSeenPlayer = _player.getMidpoint();
 
             if (_path != null && !_path.finished)
@@ -168,11 +168,11 @@ class Enemy extends FlxSprite
 		if (s == CHASING)
 		{
 			moveToPosition(
-                _lastSeenPlayer,
-                true,
-                true,
-                switchState,
-                [WATCHING]);
+                                _lastSeenPlayer,
+                                true,
+                                true,
+                                switchState,
+                                [WATCHING]);
 
 			angleVision *= 5;
 		}
@@ -181,11 +181,11 @@ class Enemy extends FlxSprite
 		{
 			_lastSeenPlayer = null;
 			moveToPosition(
-                _spawnPoint,
-                false,
-                false,
-                switchState,
-                [IDLE]);
+                                _spawnPoint,
+                                false,
+                                false,
+                                switchState,
+                                [IDLE]);
 		}
 
 		if (s == IDLE)
@@ -202,65 +202,65 @@ class Enemy extends FlxSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		if (_state == SHOOTING)
-		{
-			if (canSeePlayer)
-			{
-				timeTillLoseVision = timeTillLoseVisionMax;
-				aimAtPlayerPosition();
-			} else {
-				timeTillLoseVision -= elapsed;
-				if (timeTillLoseVision <= 0)
-				{
-					_player = null;
-					
-					switchState(CHASING);
-				}
-			}
+                if (_state == SHOOTING)
+                {
+                        if (canSeePlayer)
+                        {
+                                timeTillLoseVision = timeTillLoseVisionMax;
+                                aimAtPlayerPosition();
+                        } else {
+                                timeTillLoseVision -= elapsed;
+                                if (timeTillLoseVision <= 0)
+                                {
+                                        _player = null;
+                                        
+                                        switchState(CHASING);
+                                }
+                        }
 
-			_framesTillNextShot -= 1;
-			if (_framesTillNextShot <= 0) shoot();	
-		}
+                        _framesTillNextShot -= 1;
+                        if (_framesTillNextShot <= 0) shoot();	
+                }
 
-        if (_state == HEARING)
-        {
-            _framesTillDoneHearing--;
-            aimAtPlayerPosition();
-            if (_framesTillDoneHearing <= 0)
-            {
-                switchState(CHASING);
-            }
-        }
-		
-		if (_state == CHASING)
-		{
-			aimAtPlayerPosition();
-		}
+                if (_state == HEARING)
+                {
+                    _framesTillDoneHearing--;
+                    aimAtPlayerPosition();
+                    if (_framesTillDoneHearing <= 0)
+                    {
+                        switchState(CHASING);
+                    }
+                }
+                        
+                if (_state == CHASING)
+                {
+                        aimAtPlayerPosition();
+                }
 
-		if (_state == WATCHING)
-		{
-			_framesTillMoveBack--;
-			if (_framesTillMoveBack <= 0) switchState(MOVING_BACK);
-		}
+                if (_state == WATCHING)
+                {
+                        _framesTillMoveBack--;
+                        if (_framesTillMoveBack <= 0) switchState(MOVING_BACK);
+                }
 
-		if (_state == MOVING_BACK)
-		{
-			if (_path.nodeIndex < _path.nodes.length) 
-			{
-				angleFacing = FlxAngle.angleBetweenPoint(this,
+                if (_state == MOVING_BACK)
+                {
+                        if (_path.nodeIndex < _path.nodes.length) 
+                        {
+                                angleFacing = FlxAngle.angleBetweenPoint(this,
                                 _path.nodes[_path.nodeIndex], true);
-			}
-		}
-		
-		spread = Math.min(Math.max(spread - spreadDecreasePerFrame
-                    , spreadMinimum), 40);
-		
-		if (_player != null)
-			_player.getMidpoint(_lastSeenPlayer);
-		
-		super.update(elapsed);
+                        }
+                }
+                
+                spread = Math.min(Math.max(spread - spreadDecreasePerFrame
+                                                , spreadMinimum), 40);
+                
+                if (_player != null)
+                        _player.getMidpoint(_lastSeenPlayer);
+                
+                super.update(elapsed);
 
-		updateAiming();
+                updateAiming();
 	}
 
 	private function updateAiming():Void
@@ -270,9 +270,9 @@ class Enemy extends FlxSprite
 
 		var difference:Float = (angleFacing - gun.angle);
 		if (difference > 180)
-            difference -= 360;
-        else if (difference < -180)
-            difference += 360;
+                        difference -= 360;
+                else if (difference < -180)
+                        difference += 360;
 
 		gun.angle += difference / 6;
 	}
