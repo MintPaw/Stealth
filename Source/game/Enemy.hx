@@ -163,6 +163,7 @@ class Enemy extends FlxSprite
 
         if (s == HEARING)
         {
+            if (_path != null && !_path.finished) _path.cancel();
             if (_lastSeenPlayer == null || Reg.rnd.int(0, 30) == 0)
                 _lastSeenPlayer = p.getMidpoint();
 

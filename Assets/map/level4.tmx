@@ -10,7 +10,7 @@
  </layer>
  <layer name="Collision" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjZmBgYB5gPFBg1P6hYT+t0hkx9tMynROyn9b5bNT+Ufvx2U9NN+AzmxCghd2k2E8rMGr/wGMAq3cDIg==
+   eJxjZmBgYB5gPFBguNpPrJlDxX5apTNi7KdlOidkP63z2aj9o/bjs5+absBnNiFAC7tJsZ9WYNT+gccA1P8DKA==
   </data>
  </layer>
  <layer name="Visual" width="32" height="18" visible="0">
